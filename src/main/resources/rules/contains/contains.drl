@@ -1,0 +1,26 @@
+package rules.contains;
+import com.rule.drools.pojo.Person;
+import com.rule.drools.pojo.School;
+    rule containsTest
+      when
+       $s:School();
+       $p:Person(className contains $s.className)
+      then
+       System.out.println("成功使用了contains");
+     end
+    rule containsTest2
+       when
+        $s:School();
+        $p:Person(className contains $s.className)
+       then
+        $s.setClassName("二班");
+        update($s)
+        System.out.println("成功update contains");
+       end
+    rule containsTest3
+       when
+        $s:School();
+        $p:Person(className not contains $s.className)
+       then
+        System.out.println("成功使用 not  contains");
+       end
