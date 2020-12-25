@@ -1,0 +1,27 @@
+package com.newcore.ifrs17.fact.gpr;
+import  com.newcore.ifrs17.fact.gpr.IFRS17DefGprAnnuity1stRecPricingResve;
+
+rule "IIFRS17DefGprAnnuity1stRecPricingResve_polCode_check"
+activation-group "polCodeCheck"
+    when ifrs17DefGprAnnuity1stRecPricingResve:IFRS17DefGprAnnuity1stRecPricingResve( polCode==null || polCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs17DefGprAnnuity1stRecPricingResve.setRemark("精算代码为空或不符合规则 \n");
+    end
+rule "IIFRS17DefGprAnnuity1stRecPricingResve_polCode_checkNULL"
+activation-group "polCodeCheck"
+    when ifrs17DefGprAnnuity1stRecPricingResve:IFRS17DefGprAnnuity1stRecPricingResve( polCode=="NULL")
+    then
+        ifrs17DefGprAnnuity1stRecPricingResve.setRemark("精算代码不可为NULL \n");
+    end
+
+rule "IFRS17DefGprAnnuity1stRecPricingResve_polName_check"
+    when ifrs17DefGprAnnuity1stRecPricingResve:IFRS17DefGprAnnuity1stRecPricingResve(polName == null)
+    then
+        ifrs17DefGprAnnuity1stRecPricingResve.setRemark(ifrs17DefGprAnnuity1stRecPricingResve.getRemark()==null?"产品名称为空":ifrs17DefGprAnnuity1stRecPricingResve.getRemark()+"产品名称为空 \n");
+    end
+
+rule "IFRS17DefGprAnnuity1stRecPricingResve_isAnnuity1stRecPricingResve_check"
+    when ifrs17DefGprAnnuity1stRecPricingResve:IFRS17DefGprAnnuity1stRecPricingResve(isAnnuity1stRecPricingResve == null||(isAnnuity1stRecPricingResve not in ("Y","N")))
+    then
+        ifrs17DefGprAnnuity1stRecPricingResve.setRemark(ifrs17DefGprAnnuity1stRecPricingResve.getRemark()==null?"产品是否需要计算年金首次领取日定价准备金为空或者不符合标准":ifrs17DefGprAnnuity1stRecPricingResve.getRemark()+"产品是否需要计算年金首次领取日定价准备金为空或者不符合标准 \n");
+    end

@@ -1,0 +1,20 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpDiscreParticiPol;
+
+rule "IFRS17DefCntrgrpDiscreParticiPol_polCode_check"
+    when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol( polCode==null || (polCode.length()>10) || polCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs17DefCntrgrpDiscreParticiPol.setRemark("精算代码为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefCntrgrpDiscreParticiPol_polName_check"
+    when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol(polName == null)
+    then
+        ifrs17DefCntrgrpDiscreParticiPol.setRemark(ifrs17DefCntrgrpDiscreParticiPol.getRemark()==null?"产品名称为空":ifrs17DefCntrgrpDiscreParticiPol.getRemark()+"产品名称为空 \n");
+    end
+
+rule "IFRS17DefCntrgrpDiscreParticiPol_discreParticipationPol_check"
+    when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol(discreParticipationPol ==null||(discreParticipationPol not in ("Y","N")))
+    then
+        ifrs17DefCntrgrpDiscreParticiPol.setRemark(ifrs17DefCntrgrpDiscreParticiPol.getRemark()==null?"具有相机参与分红特征产品为空或者输入不正确":ifrs17DefCntrgrpDiscreParticiPol.getRemark()+"具有相机参与分红特征产品为空或者输入不正确 \n");
+    end

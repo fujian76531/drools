@@ -1,0 +1,54 @@
+package com.newcore.ifrs17.fact.cashflow;
+import  com.newcore.ifrs17.fact.cashflow.IFRS17DefActualCashflowNonKeepAccount;
+
+rule "IIFRS17DefActualCashflowNonKeepAccount_dataSource_check"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount( dataSource==null || dataSource not matches "^[A-Z0-9a-z]{1,100}$")
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"业务系统代码为空或不符合规则 \n":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"业务系统代码为空或不符合规则 \n");
+
+    end
+rule "IIFRS17DefActualCashflowNonKeepAccount_transCode_checkNULL"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount( transCode==null || transCode not matches "^[A-Z0-9a-z]{2}$")
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"收付费项目为空或不符合规则 \n":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"收付费项目为空或不符合规则 \n");
+    end
+
+rule "IIFRS17DefActualCashflowNonKeepAccount_transType_check"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount(transType == null || transType not in ("1","2","3","4"))
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"业务类别不可为空或不符合规则":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"业务类别不可为空或不符合规则 \n");
+    end
+
+rule "IIFRS17DefActualCashflowNonKeepAccount_payType_check"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount(payType == null || (payType not matches"^[A-Za-z]{1,100}$" && payType not matches "^[A-Za-z0-9]{1,100}$"))
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"收付款方式为空或不符合规则":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"收付款方式为空或不符合规则 \n");
+    end
+
+
+rule "IIFRS17DefActualCashflowNonKeepAccount_riskType_check"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount( riskType==null || riskType not in ("1","9"))
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"长短险标志为空或不符合规则 \n":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"长短险标志为空或不符合规则 \n");
+    end
+
+rule "IIFRS17DefActualCashflowNonKeepAccount_typeCys_checkNULL"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount( flagCys == null || flagCys not in ("1","0"))
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"冲应收标识不可为空或不符合规则":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"冲应收标识不可为空或不符合规则 \n");
+    end
+
+
+rule "IIFRS17DefActualCashflowNonKeepAccount_accFlag_check"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount(accFlag == null || accFlag not in("1","0","2"))
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"到账确认标识为空或不符合规则":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"到账确认标识为空或不符合规则 \n");
+    end
+
+rule "IIFRS17DefActualCashflowNonKeepAccount_dataFeature_check"
+    when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount(dataFeature == null || dataFeature !="9")
+    then
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"数据属性不可为空":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"数据属性不可为空 \n");
+    end
+
+

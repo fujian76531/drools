@@ -1,0 +1,39 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpInsurNinsurSep;
+
+rule "IFRS17DefCntrgrpInsurNinsurSep_polCode_check"
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep( polCode==null ||  polCode not matches "^[A-Z0-9_]{1,20}$")
+    then
+        ifrs17DefCntrgrpInsurNinsurSep.setRemark("最小计量单元的编码为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefCntrgrpInsurNinsurSep_insurComponent_check"
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep(insurComponent ==null||(insurComponent not in ("Y","N")))
+    then
+        ifrs17DefCntrgrpInsurNinsurSep.setRemark(ifrs17DefCntrgrpInsurNinsurSep.getRemark()==null?"A-保险成分为空或者输入不正确":ifrs17DefCntrgrpInsurNinsurSep.getRemark()+"A-保险成分为空或者输入不正确 \n");
+    end
+
+rule "IFRS17DefCntrgrpInsurNinsurSep_investComponent_check"
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep(investComponent==null||(investComponent not in ("Y","N")))
+    then
+        ifrs17DefCntrgrpInsurNinsurSep.setRemark(ifrs17DefCntrgrpInsurNinsurSep.getRemark()==null?"X-可明确区分的投资成分为空或者输入不正确":ifrs17DefCntrgrpInsurNinsurSep.getRemark()+"X-可明确区分的投资成分为空或者输入不正确 \n");
+    end
+rule "IFRS17DefCntrgrpInsurNinsurSep_embeddedDerivatives_check"
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep(embeddedDerivatives==null||(embeddedDerivatives not in ("Y","N")))
+    then
+        ifrs17DefCntrgrpInsurNinsurSep.setRemark(ifrs17DefCntrgrpInsurNinsurSep.getRemark()==null?"Y-不密切相关的嵌入式衍生工具为空或者长度不符合规则":ifrs17DefCntrgrpInsurNinsurSep.getRemark()+"Y-不密切相关的嵌入式衍生工具为空或者长度不符合规则 \n");
+    end
+
+
+rule "IFRS17DefCntrgrpInsurNinsurSep_noninsurServiceComponent_check"
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep(noninsurServiceComponent==null||(noninsurServiceComponent not in ("Y","N")))
+    then
+        ifrs17DefCntrgrpInsurNinsurSep.setRemark(ifrs17DefCntrgrpInsurNinsurSep.getRemark()==null?"Z-可明确区分的非保险服务成分为空或者结尾不是A/X/Y/Z ":ifrs17DefCntrgrpInsurNinsurSep.getRemark()+"Z-可明确区分的非保险服务成分为空或者结尾不是A/X/Y/Z  \n");
+    end
+
+
+rule "IFRS17DefCntrgrpInsurNinsurSep_noninsurServiceComponentAllN_check"
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep(noninsurServiceComponent=="N"&&embeddedDerivatives=="N"&&investComponent=="N"&&insurComponent=="N")
+    then
+        ifrs17DefCntrgrpInsurNinsurSep.setRemark(ifrs17DefCntrgrpInsurNinsurSep.getRemark()==null?"A-保险成分,X-可明确区分的投资成分，Y-不密切相关的嵌入式衍生工具,Z-可明确区分的非保险服务成分不可全为N":ifrs17DefCntrgrpInsurNinsurSep.getRemark()+"A-保险成分,X-可明确区分的投资成分，Y-不密切相关的嵌入式衍生工具,Z-可明确区分的非保险服务成分不可全为N  \n");
+    end

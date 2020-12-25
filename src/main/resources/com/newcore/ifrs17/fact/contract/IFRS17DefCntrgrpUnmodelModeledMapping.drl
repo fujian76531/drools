@@ -1,0 +1,16 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpUnmodelModeledMapping;
+
+rule "IFRS17DefCntrgrpUnmodelModeledMapping_polCode_check"
+    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping( polCode==null || polCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("精算代码为空或不符合规则 \n");
+    end
+
+
+rule "IFRS17DefCntrgrpUnmodelModeledMapping_isAnnuityConversion_check"
+    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping( targetPolCode==null || targetPolCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark(ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()==null?"目标模型产品代码":ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()+"目标模型产品代码 \n");
+    end
+

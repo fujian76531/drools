@@ -1,0 +1,47 @@
+package com.newcore.ifrs17.fact.cashflow;
+import  com.newcore.ifrs17.fact.cashflow.IFRS17DefActualCashflowUniSgAplctSnCvs;
+
+
+rule "IFRS17DefActualCashflowUniSgAplctSnCvs_dataSource_checkNULL"
+    when ifrs17DefActualCashflowUniSgAplctSnCvs:IFRS17DefActualCashflowUniSgAplctSnCvs( dataSource==null || dataSource not matches "^[A-Z0-9a-z]{1,100}$")
+    then
+        ifrs17DefActualCashflowUniSgAplctSnCvs.setRemark(ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()==null?"业务系统代码为空或不符合规则 \n":ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()+"业务系统代码为空或不符合规则 \n");
+
+    end
+
+rule "IFRS17DefActualCashflowUniSgAplctSnCvs_transCode_checkNULL"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowUniSgAplctSnCvs( transCode==null || transCode not matches "^[A-Z0-9a-z]{2}$")
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"收付费项目为空或不符合规则 \n":ifrs17DefActualCashflowBiSnCvs.getRemark()+"收付费项目不可为空 \n");
+
+    end
+
+rule "IFRS17DefActualCashflowUniSgAplctSnCvs_transType_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowUniSgAplctSnCvs(transType == null || transType not in ("1","2","3","4"))
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"业务类别不可为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"业务类别不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniSgAplctSnCvs_payType_check"
+    when ifrs17DefActualCashflowUniSgAplctSnCvs:IFRS17DefActualCashflowUniSgAplctSnCvs(payType == null || (payType not matches"^[A-Za-z]{1,100}$" && payType not matches "^[A-Za-z0-9]{1,100}$"))
+    then
+        ifrs17DefActualCashflowUniSgAplctSnCvs.setRemark(ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()==null?"收付款方式为空或不符合规则":ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()+"收付款方式为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniSgAplctSnCvs_flagCys_checkNULL"
+    when ifrs17DefActualCashflowUniSgAplctSnCvs:IFRS17DefActualCashflowUniSgAplctSnCvs( flagCys == null || flagCys not in ("0","1"))
+    then
+        ifrs17DefActualCashflowUniSgAplctSnCvs.setRemark(ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()==null?"冲应收标识为空或不符合规则":ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()+"冲应收标识为空或不符合规则 \n");
+    end
+
+rule "Iifrs17DefActualCashflowUniSgAplctSnCvs_usestatus_check"
+    when ifrs17DefActualCashflowUniSgAplctSnCvs:IFRS17DefActualCashflowUniSgAplctSnCvs( usestatus==null || usestatus not in ("0","1"))
+    then
+        ifrs17DefActualCashflowUniSgAplctSnCvs.setRemark(ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()==null?"财务使用状态为空或不符合规则 \n":ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()+"财务使用状态为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniSgAplctSnCvs_accType1_check"
+    when ifrs17DefActualCashflowUniSgAplctSnCvs:IFRS17DefActualCashflowUniSgAplctSnCvs(accType1 == null || accType1 not matches "^[0-9]{1,100}$")
+    then
+        ifrs17DefActualCashflowUniSgAplctSnCvs.setRemark(ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()==null?"类型不可为空或不符合规则":ifrs17DefActualCashflowUniSgAplctSnCvs.getRemark()+"类型不可为空或不符合规则 \n");
+    end

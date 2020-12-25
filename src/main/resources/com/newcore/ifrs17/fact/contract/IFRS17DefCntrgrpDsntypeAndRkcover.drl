@@ -1,0 +1,46 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpDsntypeAndRkcover;
+
+rule "IFRS17DefCntrgrpDsntypeAndRkcover_polCode_check"
+activation-group "polCodeCheck"
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover( polCode==null || polCode.length()>10 || polCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark("精算代码为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefCntrgrpDsntypeAndRkcover_polCode_checkNull"
+activation-group "polCodeCheck"
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover( polCode=="NULL")
+    then
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark("精算代码为不可为NULL \n");
+    end
+
+rule "IFRS17DefCntrgrpDsntypeAndRkcover_polName_check"
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(polName==null)
+    then
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"产品名称为空或者输入不正确":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"产品名称为空或者输入不正确 \n");
+    end
+
+rule "IFRS17DefCntrgrpDsntypeAndRkcover_designCode_check"
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(designCode ==null||designCode.length()>10 || designCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"设计类型编码为空或者输入不正确":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"设计类型编码为空或者输入不正确 \n");
+    end
+
+rule "IFRS17DefCntrgrpDsntypeAndRkcover_designType_check"
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(designType==null)
+    then
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"设计类型为空":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"设计类型为空 \n");
+    end
+rule "IFRS17DefCntrgrpDsntypeAndRkcover_riskCoverCode_check"
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(riskCoverCode==null||riskCoverCode.length()>10 || riskCoverCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"覆盖风险编码为空或者长度不符合规则":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"覆盖风险编码为空或者长度不符合规则 \n");
+    end
+
+
+rule "IFRS17DefCntrgrpDsntypeAndRkcover_riskCover_check"
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(riskCover==null)
+    then
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"覆盖风险为不能为空":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"覆盖风险为不能为空 \n");
+    end

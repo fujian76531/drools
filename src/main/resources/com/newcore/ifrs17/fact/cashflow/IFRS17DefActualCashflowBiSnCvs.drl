@@ -1,0 +1,84 @@
+package com.newcore.ifrs17.fact.cashflow;
+import  com.newcore.ifrs17.fact.cashflow.IFRS17DefActualCashflowBiSnCvs;
+
+rule "IFRS17DefActualCashflowBiSnCvs_dataSource_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs( dataSource==null || dataSource not matches "^[A-Z0-9a-z]{1,100}$")
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"业务系统代码为空或不符合规则 \n":ifrs17DefActualCashflowBiSnCvs.getRemark()+"业务系统代码为空或不符合规则 \n");
+
+    end
+rule "IFRS17DefActualCashflowBiSnCvs_transCode_checkNULL"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs( transCode==null  || transCode not matches "^[A-Za-z0-9]{2}$")
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"收付费项目为空或不符合规则 \n":ifrs17DefActualCashflowBiSnCvs.getRemark()+"收付费项目为空或不符合规则 \n");
+
+    end
+
+rule "IFRS17DefActualCashflowBiSnCvs_transType_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(transType == null || transType not in ("1","2","3","4"))
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"业务类别不可为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"业务类别不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiSnCvs_payType_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(payType == null  || (payType not
+    matches"^[A-Za-z]{1,100}$" && payType not matches "^[A-Za-z0-9]{1,100}$"))
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"收付款方式为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"收付款方式为空或不符合规则 \n");
+    end
+
+
+rule "IFRS17DefActualCashflowBiSnCvs_riskType_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs( riskType==null || riskType not in ("1","9"))
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"长短险标志为空或不符合规则 \n":ifrs17DefActualCashflowBiSnCvs.getRemark()+"长短险标志为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiSnCvs_flagCys_checkNULL"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs( flagCys == null || flagCys not in ("1","0"))
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"冲应收标识不可为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"冲应收标识不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiSnCvs_accType1_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(accType1 == null || accType1 not matches "^[0-9]{1,100}$")
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"类型不可为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"类型不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiSnCvs_accFlag_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(accFlag == null ||  accFlag not in ("1","0","2"))
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"到账确认标识为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"到账确认标识为空或不符合规则 \n");
+    end
+rule "IFRS17DefActualCashflowBiSnCvs_cashPay_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(cashPay == null ||  cashPay not in ("1","0","2"))
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"资金收付为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"资金收付为空或不符合规则 \n");
+    end
+
+
+/*
+rule "IFRS17DefActualCashflowBiSnCvs_priClassification_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(priClassification == null)
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"一级分类不可为空":ifrs17DefActualCashflowBiSnCvs.getRemark()+"一级分类不可为空 \n");
+    end
+
+
+rule "IFRS17DefActualCashflowBiSnCvs_secClassification_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs( secClassification==null)
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"二级分类不可为空":ifrs17DefActualCashflowBiSnCvs.getRemark()+"二级分类不可为空 \n");
+    end
+rule "IFRS17DefActualCashflowBiSnCvs_sceneName_checkNULL"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(sceneName  == null)
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"场景名称不可为空":ifrs17DefActualCashflowBiSnCvs.getRemark()+"场景名称不可以为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiSnCvs_sceneNum_check"
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(sceneNum == null ||  sceneNum not matches "^[A-Z0-9]{1,100}$")
+    then
+        ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"场景编号为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"场景编号为空或不符合规则 \n");
+    end*/

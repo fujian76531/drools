@@ -1,0 +1,54 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpAnnuityConverse;
+
+rule "IFRS17DefCntrgrpAnnuityConverse_polCode_check"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse( polCode==null || (polCode.length()>10) || polCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark("精算代码为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefCntrgrpAnnuityConverse_polName_check"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(polName == null)
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"产品名称为空":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"产品名称为空 \n");
+    end
+
+rule "IFRS17DefCntrgrpAnnuityConverse_isAnnuityConversion_check"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(isAnnuityConversion ==null||(isAnnuityConversion not in ("Y","N")))
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"是否需要年金险种转换":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"是否需要年金险种转换 \n");
+    end
+
+rule "IFRS17DefCntrgrpAnnuityConverse_polCodeConverted_check"
+activation-group "polCodeConverted_group"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(polCodeConverted ==null)
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"转换后险种代码":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"转换后险种代码 \n");
+    end
+
+rule "IFRS17DefCntrgrpAnnuityConverse_polCodeConvertedRuleYNull_check"
+activation-group "polCodeConverted_group"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(isAnnuityConversion == "Y" &&  polCodeConverted=="NULL")
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"是否需要年金险种转换为Y转换后险种代码不能为NULL \n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"是否需要年金险种转换为Y转换后险种代码不能为NULL \n");
+    end
+
+rule "IFRS17DefCntrgrpAnnuityConverse_polCodeConvertedRule_check"
+activation-group "polCodeConverted_group"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(isAnnuityConversion == "Y" && (polCodeConverted not matches "^[A-Z0-9_]{1,10}$"))
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"是否需要年金险种转换为Y转换后险种代码不符合规则 \n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"是否需要年金险种转换为Y转换后险种代码不符合规则 \n");
+    end
+rule "IFRS17DefCntrgrpAnnuityConverse_polCodeConvertedRuleN_check"
+activation-group "polCodeConverted_group"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(isAnnuityConversion == "N" && polCodeConverted!="NULL")
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"是否需要年金险种转换为N转换后险种代码必须为NULL \n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"是否需要年金险种转换为N转换后险种代码必须为NULL \n");
+    end
+
+rule "IFRS17DefCntrgrpAnnuityConverse_annunityRecMode_check"
+activation-group "polCodeConverted_group"
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(annunityRecMode==null || annunityRecMode not matches "^[A-Z0-9]$")
+    then
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"年金领取方式不符合规则 \n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"年金领取方式不符合规则 \n");
+    end

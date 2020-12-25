@@ -1,0 +1,77 @@
+package com.newcore.ifrs17.fact.cashflow;
+import  com.newcore.ifrs17.fact.cashflow.IFRS17DefActualCashflowUniNDebitNCreditC8;
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_dataSource_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8( dataSource==null || dataSource not matches "^[A-Z0-9a-z]{1,100}$")
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"业务系统代码为空或不符合规则 \n":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"业务系统代码为空或不符合规则 \n");
+
+    end
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_transCode_checkNULL"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8( transCode==null || transCode not matches "^[A-Z0-9a-z]{2}$")
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"收付费项目不可为空 \n":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"收付费项目不可为空 \n");
+
+    end
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_transType_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8(transType == null || transType not in ("1","2","3","4"))
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"业务类别不可为空或不符合规则":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"业务类别不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_payType_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8(payType == null || (payType not matches"^[A-Za-z]{1,100}$" && payType not matches "^[A-Za-z0-9]{1,100}$"))
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"收付款方式不可为空":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"收付款方式不可为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_riskType_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8( riskType==null || riskType not in ("1","9"))
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"长短险标志不可为空 \n":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"长短险标志不可为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_flagCys_checkNULL"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8( flagCys == null || flagCys not in ("1","0"))
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"冲应收标识不可为空或不符合规则":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"冲应收标识不可为空或不符合规则 \n");
+    end
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_flagCys_checkNULL"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8( accFlag == null || accFlag in ("1","0","2"))
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"到账确认标识不可为空或不符合规则":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"到账确认标识不可为空或不符合规则 \n");
+    end
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_accType1_check"
+    when IFRS17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8(accType1 == null || accType1 not matches "^[0-9]{1,100}$")
+    then
+        IFRS17DefActualCashflowUniNDebitNCreditC8.setRemark(IFRS17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"类型不可为空或不符合规则":IFRS17DefActualCashflowUniNDebitNCreditC8.getRemark()+"类型不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_isKeep_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8(isKeep == null|| isKeep not in ("0","1"))
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"数据取舍不可为空":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"数据取舍不可为空 \n");
+    end
+/*rule "IFRS17DefActualCashflowUniNDebitNCreditC8_priClassification_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8(priClassification == null)
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"一级分类不可为空":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"一级分类不可为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_sceneName_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8(sceneName == null)
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"场景名称不可为空":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"场景名称不可为空 \n");
+    end
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_secClassification_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8( secClassification==null)
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"二级分类不可为空":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"二级分类不可为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_sceneNum_check"
+    when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8(sceneNum == null)
+    then
+        ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"场景编号不可为空":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"场景编号不可为空 \n");
+    end*/

@@ -1,0 +1,24 @@
+package rules.memberOf
+import com.rule.drools.pojo.Person;
+import com.rule.drools.pojo.School;
+ rule memberOfTest01
+  when
+   $s:School();
+   $p:Person(className memberOf $s.getClassName());
+  then
+    System.out.println("恭喜你，成功的使用了memberOf");
+  end
+ rule memberOfTest02
+  when
+   $s:School();
+   $p:Person(className memberOf "一班");
+  then
+    System.out.println("恭喜你，成功的使用了memberOf 02");
+  end
+ rule memberOfTest03
+  when
+   $s:School();
+   $p:Person(className memberOf $s.className);
+  then
+    System.out.println("恭喜你，成功的使用了memberOf 03");
+  end

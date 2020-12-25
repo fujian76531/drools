@@ -1,0 +1,153 @@
+package com.newcore.ifrs17.fact.consistency;
+import  com.newcore.ifrs17.fact.consistency.DwdI17InsurancePolicyDayOfl;
+import java.util.Date;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
+function boolean checkObjectDate(Object beforeDate ,Date afterDate,int value){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(afterDate);
+        calendar.add(Calendar.DAY_OF_MONTH,value);
+        Date dt1=calendar.getTime();
+        calendar.setTime((Date)beforeDate);
+        Date dt2=calendar.getTime();
+        if(dt2.compareTo(dt1)<0){
+            return true;
+        }else{
+            return false;
+        }
+}
+function boolean checkDateObject(Date beforeDate ,Object afterDate,int value){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime((Date)afterDate);
+        calendar.add(Calendar.DAY_OF_MONTH,value);
+        Date dt1=calendar.getTime();
+        calendar.setTime(beforeDate);
+        Date dt2=calendar.getTime();
+        if(dt2.compareTo(dt1)<0){
+            return true;
+        }else{
+            return false;
+        }
+}
+function boolean checkObject(Object beforeDate ,Object afterDate,int value){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime((Date)afterDate);
+        calendar.add(Calendar.DAY_OF_MONTH,value);
+        Date dt1=calendar.getTime();
+        calendar.setTime((Date)beforeDate);
+        Date dt2=calendar.getTime();
+        if(dt2.compareTo(dt1)<0){
+            return true;
+        }else{
+            return false;
+        }
+}
+function String dateToString(Object date,String format){
+    SimpleDateFormat formatter = new SimpleDateFormat(format);
+    String dateInfo = formatter.format((Date)date);
+    return dateInfo;
+}
+rule "dwdI17InsurancePolicyDayOfl_cntrStatInsEndDate_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(cntrStat=="T" && insEndDate!=null && checkDateObject(new Date(),insEndDate,0))
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1012终止日期不应大于评估终止日 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1012终止日期不应大于评估终止日 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_insEndDateCntrStat_T_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(cntrStat=="T" && insEfftDate!=null &&insEndDate!=null&& checkObject(insEndDate,insEfftDate,0))
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1013保单终止状态,终止日期错 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1013保单终止状态,终止日期错 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_insEndDateCntrStat_L_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(cntrStat=="L"&&insEndDate!=null && dateToString(insEndDate,"yyyy-MM-dd")!="1900-01-01")
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1021失效状态不应有终止日期 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1021失效状态不应有终止日期 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_insureSex_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(dwdI17InsurancePolicyDayOfl.insuredSex not in ("M","F"))
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1023被保险人性别错 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1023被保险人性别错 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_faceAmntZero_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(faceAmnt<0)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1024保单保额不应小于0 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1024保单保额不应小于0 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_DwdI17PrdInsurTypeDayOfl_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(moneyinItrvl=="N" && isSupYearMoneyin=="N" &&isSupHalfYearMoneyin=="N" && isSupQuarterMoneyin=="N" && isSupMonthlyMoneyin=="N" && isSupSingleMoneyin=="N" && isSup3YearsMoneyin=="N")
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1030缴费频率不正确 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1030缴费频率不正确 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_moneyinDur_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(moneyinDur != null && moneyinDur<1 )
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1031缴费期错 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1031缴费期错 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_stdPremium_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(stdPremium<0)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1033缴费标准错 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1033缴费标准错 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_beginUValue_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(beginUValue<0)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1036_1期初余额小于零 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1036_1期初余额小于零 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_aveFundBalance_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl((aveFundBalance1<0) ||(aveFundBalance2<0))
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1038平均资金运用额小于零 " +"\n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1038平均资金运用额小于零 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_stdPremiumSignDate_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl((stdPremium==null || stdPremium<=0 ) && (signDate !=null && checkDateObject(new Date(),signDate,0)))
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1047新单基本保费应该大于0，且不能为空 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1047新单基本保费应该大于0，且不能为空 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_endLValue_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(endLValue>3000000)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1059_2账户余额过大 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1059_2账户余额过大 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_faceAmnt_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(dwdI17InsurancePolicyDayOfl.faceAmnt==null)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1072保单保额不应为空 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1072保单保额不应为空 \n");
+end
+
+rule "dwdI17InsurancePolicyDayOfl_insEfftdate_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(insEfftDate==null)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"1001生效日期不能为空 " +"\n":dwdI17InsurancePolicyDayOfl.getRemark()+"1001生效日期不能为空 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_liaEndDate_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(liaEndDate==null)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"1002责任终止日期不能为空 " +"\n":dwdI17InsurancePolicyDayOfl.getRemark()+"1002责任终止日期不能为空 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_occurDate_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(occurDate==null)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"2003出险日期为空 " +"\n":dwdI17InsurancePolicyDayOfl.getRemark()+"2003出险日期为空 \n");
+end
+rule "dwdI17InsurancePolicyDayOfl_caserptDate_check"
+    when
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(caserptDate==null)
+    then
+        dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"2004报案日期为空 " +"\n":dwdI17InsurancePolicyDayOfl.getRemark()+"2004报案日期为空 \n");
+end

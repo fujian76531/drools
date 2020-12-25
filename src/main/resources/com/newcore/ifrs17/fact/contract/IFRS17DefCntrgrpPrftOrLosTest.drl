@@ -1,0 +1,257 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpPrftOrLosTest;
+import  java.util.Map;
+global  java.util.Map globalMap;
+
+rule "IFRS17DefCntrgrpPrftOrLosTest_minCalUnitCode_check"
+activation-group "minCalUnitCode_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest( minCalUnitCode==null || (minCalUnitCode.length()>20) || minCalUnitCode not matches("^[A-Z0-9_]{1,20}$"))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark("最小核算单元编码为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefCntrgrpPrftOrLosTest_minCalUnitNameNull_check"
+activation-group "minCalUnitName_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest( minCalUnitName=="NULL")
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark("最小核算单元编码不可为NULL \n");
+    end
+
+
+rule "IFRS17DefCntrgrpPrftOrLosTest_minCalUnitName_check"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(minCalUnitName == null)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"最小核算单元名称为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"最小核算单元名称为空 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_type_check"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(type ==null||(type not in ("1","2","NULL")))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"判断类型为空或者输入不正确":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"判断类型为空或者输入不正确 \n");
+    end
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_profitOrLossTestResult_check"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(profitOrLossTestResult==null||(profitOrLossTestResult not in ("A","B","C")))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"盈亏测试结果为空或者输入不正确":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"盈亏测试结果为空或者输入不正确 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insuredAge_check"
+activation-group "insuredAge_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(insuredAge==null)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"被保险人投保年龄输入为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"被保险人投保年龄输入为空 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insuredAgeRule_check"
+activation-group "insuredAge_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(((insuredAge matches("^[0-9]*$")||insuredAge=="NULL"))==false)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"被保险人投保年龄输入不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"被保险人投保年龄输入不符合规则 \n");
+    end
+
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insuredSex_check"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(insuredSex==null||(insuredSex not in ("M","F","NULL")))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"被保险人性别为空或者输入不正确":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"被保险人性别为空或者输入不正确 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_holderAge_check"
+activation-group "holderAge_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(holderAge==null)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"投保险人年龄为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"投保险人年龄为空 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_holderAgeRule_check"
+activation-group "holderAge_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((holderAge matches("^[0-9]*$")||holderAge=="NULL")==false)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"投保险人年龄不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"投保险人年龄不符合规则 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_holderAgeCompare_check"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(moneyinDurAmnt!="NULL" && insurDurAmnt!="NULL" && Float.valueOf(moneyinDurAmnt)>Float.valueOf(insurDurAmnt))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"缴费期间不可大于保险期间":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"缴费期间不可大于保险期间 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_holderAgeCalculateTwo_check"
+activation-group "holderAge_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((moneyinDurAmnt!="NULL" && insurDurAmnt=="NULL")||(moneyinDurAmnt=="NULL" && insurDurAmnt!="NULL"))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"投保人投保年龄校验缴费期间不可大于保险期间":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"投保人投保年龄校验缴费期间不可大于保险期间 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_holderAgeCalculateZero_check"
+activation-group "holderAge_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(holderAge!="NULL"&&(insurDurUnit=="0" && insuredAge!="NULL" && moneyinDurAmnt!="NULL"&&(Float.valueOf(insuredAge)+Float.valueOf(insurDurAmnt))>106))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"被投保人年龄加保险期间大于106岁":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"被投保人年龄加保险期间大于106岁 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_holderAgeCalculateOne_check"
+activation-group "holderAge_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(holderAge!="NULL"&&(insurDurUnit=="1" && insuredAge!="NULL" && moneyinDurAmnt!="NULL"&&(Float.valueOf(insuredAge)>Float.valueOf(insurDurAmnt)) || Float.valueOf(insurDurAmnt)>106))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"被投保人年龄大于保险期间或保险期间大于106":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"被投保人年龄大于保险期间或保险期间大于106 \n");
+    end
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_holderSex_check"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(holderSex==null||(holderSex not in ("M","F","NULL")))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"投保险人性别为空或者输入不正确":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"投保险人性别为空或者输入不正确 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_moneyinDurUnit_check"
+activation-group "moneyinDurUnit_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(moneyinDurUnit==null)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"缴费期间类型不可为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"缴费期间类型不可为空 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_moneyinDurUnitRule_check"
+activation-group "moneyinDurUnit_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((moneyinDurUnit matches("^[0-9]*$")||moneyinDurUnit=="NULL")==false)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"缴费期间类型不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"缴费期间类型不符合规则 \n");
+    end
+
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_moneyinDurAmnt_check"
+activation-group "moneyinDurAmnt_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(moneyinDurAmnt==null)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"缴费期间不可为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"缴费期间不可为空 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_moneyinDurAmntRule_check"
+activation-group "moneyinDurAmnt_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((moneyinDurAmnt matches("^[0-9]*$")||moneyinDurAmnt=="NULL")==false)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"缴费期间不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"缴费期间不符合规则 \n");
+    end
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insurDurUnit_check"
+activation-group "insurDurUnit_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(insurDurUnit==null)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"保险期间类型不可为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"保险期间类型不可为空 \n");
+    end
+
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insurDurUnitRule_check"
+activation-group "insurDurUnit_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((insurDurUnit matches("^[0-9]*$")||insurDurUnit=="NULL")==false)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"保险期间类型不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"保险期间类型不符合规则 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insurDurAmnt_check"
+activation-group "insurDurAmnt_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(insurDurAmnt==null)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"保险期间不可为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"保险期间不可为空 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insurDurAmntRule_check"
+activation-group "insurDurAmnt_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((insurDurAmnt matches("^[0-9]*$")||insurDurAmnt=="NULL")==false)
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"保险期间不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"保险期间不符合规则 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insurDurAmntCalculateTwo_check"
+activation-group "insurDurAmnt_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((moneyinDurAmnt!="NULL" && insurDurAmnt=="NULL")||(moneyinDurAmnt=="NULL" && insurDurAmnt!="NULL"))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"保险期间校验缴费期间和保险期间输入有误":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"保险期间校验缴费期间和保险期间输入有误 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insurDurAmntCalculateZero_check"
+activation-group "insurDurAmnt_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(insurDurAmnt!="NULL"&&(insurDurUnit=="0" && insuredAge!="NULL"&& moneyinDurAmnt!="NULL" &&(Float.valueOf(insuredAge)+Float.valueOf(insurDurAmnt))>106))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"被投保人年龄加保险期间大于106岁":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"被投保人年龄加保险期间大于106岁 \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_insurDurAmntCalculateOne_check"
+activation-group "insurDurAmnt_group"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(insurDurAmnt!="NULL"&&(insurDurUnit=="1" && insuredAge!="NULL" && moneyinDurAmnt!="NULL" &&((Float.valueOf(insuredAge)>Float.valueOf(insurDurAmnt)) || Float.valueOf(insurDurAmnt)>106)))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"被投保人年龄大于保险期间或保险期间大于106":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"被投保人年龄大于保险期间或保险期间大于106 \n");
+    end
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_annualizedPremiumCeilingFloor_Null_check"
+activation-group "annualizedPremiumCeilingFloor"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(annualizedPremiumCeiling==null || annualizedPremiumFloor == null )
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"年化保费上限或年化保费下限为空":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"年化保费上限或年化保费下限为空 \n");
+    end
+
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_annualizedPremiumCeilingFloor_Rule_check"
+activation-group "annualizedPremiumCeilingFloor"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((type==2 && (annualizedPremiumCeiling!="NULL"||annualizedPremiumFloor!="NULL"))||(type=="NULL" && (annualizedPremiumCeiling!="NULL" || annualizedPremiumFloor!="NULL")))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"判断类型为2或NULL，年化保费上限，下限必须为NULL":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"判断类型为2或NULL，年化保费上限，下限必须为NULL \n");
+    end
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_annualizedPremiumCeilingFloor_Comparison_check"
+activation-group "annualizedPremiumCeilingFloor"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((annualizedPremiumCeiling  matches("^[0-9]{1,100}$") && (annualizedPremiumFloor  matches("^[0-9]{1,100}$")))==true &&(Float.valueOf(annualizedPremiumCeiling)<Float.valueOf(annualizedPremiumFloor)))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"年化保费上下限不符合规则或年化保费上限小于下限 \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"年化保费上下限不符合规则或年化保费上限小于下限 \n");
+    end
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_faceAmntCeiling_Null_check"
+activation-group "faceAmntCeilingFloor"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(faceAmntCeiling==null || faceAmntCeiling == null )
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"保额上限或保额下限下限为空 \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"保额上限或保额下限为空 \n");
+    end
+
+
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_faceAmntCeilingFloor_Rule_check"
+activation-group "faceAmntCeilingFloor"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((type==1 && (faceAmntCeiling!="NULL"||faceAmntFloor!="NULL"))||(type=="NULL" && (faceAmntCeiling!="NULL" || faceAmntFloor!="NULL")))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"判断类型为1或NULL，保额上限，下限不为NULL \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"判断类型为2，保额上限，下限必须为NULL \n");
+    end
+
+rule "ifrs17DefCntrgrpPrftOrLosTest_faceAmntCeilingFloor_Comparison_check"
+activation-group "faceAmntCeilingFloor"
+    when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((faceAmntCeiling  matches("^[0-9]{1,100}$") && (faceAmntFloor  matches("^[0-9]{1,100}$")))==true && (Float.valueOf(faceAmntCeiling)<Float.valueOf(faceAmntFloor)))
+    then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"保额上下限不符合规则，保额上限小于下限 \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"保额上下限不符合规则，保额上限小于下限 \n");
+    end
+
+rule "IFRS17DefCntrgrpPrftOrLosTest_annuityRecType_check"
+   when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(annuityRecType==null||annuityRecType not in ("01","02","03","04","05","06","07","08","A","B","C","D","E","F","NULL"))
+   then
+       ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"年金领取类型为空或格式不正确":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"年金领取类型为空或格式不正确 \n");
+   end
+
+rule "IFRS17DefCntrgrpPrftOrLosTest_annuityRecItrvl_check"
+   when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(annuityRecItrvl==null||annuityRecItrvl not in ("Y","H","Q","M","W","NULL"))
+   then
+       ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"年金领取频率为空或者不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"年金领取频率为空或者不符合规则 \n");
+   end
+
+rule "IFRS17DefCntrgrpPrftOrLosTest_annuityRecAge_check"
+   when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(annuityRecAge==null || (annuityRecAge!="NULL" && annuityRecAge not matches("^[0-9]{1,3}$")) )
+   then
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"年金领取年龄为空或者不符合规则":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"年金领取年龄为空或者不符合规则 \n");
+   end

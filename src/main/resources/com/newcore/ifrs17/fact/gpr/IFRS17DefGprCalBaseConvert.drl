@@ -1,0 +1,23 @@
+package com.newcore.ifrs17.fact.gpr;
+import  com.newcore.ifrs17.fact.gpr.IFRS17DefGprCalBaseConvert;
+
+rule "IIFRS17DefGprCalBaseConvert_polCode_check"
+activation-group "polCodeCheckNull"
+    when ifrs17DefGprCalBaseConvert:IFRS17DefGprCalBaseConvert( polCode==null ||  polCode not matches "^[A-Z0-9_]{1,10}$")
+    then
+        ifrs17DefGprCalBaseConvert.setRemark("精算代码为空或不符合规则 \n");
+    end
+
+rule "IIFRS17DefGprCalBaseConvert_polCode_checkNull"
+activation-group "polCodeCheckNull"
+    when ifrs17DefGprCalBaseConvert:IFRS17DefGprCalBaseConvert( polCode=="NULL")
+    then
+        ifrs17DefGprCalBaseConvert.setRemark("精算代码为不可为NULL \n");
+    end
+
+
+rule "IFRS17DefGprCalBaseConvert_calBaseConverted_check"
+    when ifrs17DefGprCalBaseConvert:IFRS17DefGprCalBaseConvert(calBaseConverted == null||(calBaseConverted not in (0,1,2,3)))
+    then
+        ifrs17DefGprCalBaseConvert.setRemark(ifrs17DefGprCalBaseConvert.getRemark()==null?"定价准备金计算基础转换后的值为空或者不符合标准":ifrs17DefGprCalBaseConvert.getRemark()+"定价准备金计算基础转换后的值为空或者不符合标准 \n");
+    end

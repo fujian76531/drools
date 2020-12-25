@@ -1,0 +1,54 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpMinCalUnit;
+
+rule "IFRS17DefCntrgrpMinCalUnit_minCalUnitCode_check"
+activation-group "polCodeCheck"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( polCode==null  ||  polCode not matches("^[A-Za-z0-9_]{1,100}$"))
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark("精算代码为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefCntrgrpMinCalUnit_polName_checkNull"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( polName=="NULL")
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"精算代码名称为空或不可为NULL \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"精算代码名称为空或不可为NULL\n");
+    end
+
+
+rule "IFRS17DefCntrgrpMinCalUnit_isMerge_checkNull"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( isMerge=="NULL" || isMerge not in ("Y","N"))
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"是否合并为空或者不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"是否合并为空或者不符合规则 \n");
+    end
+
+rule "IFRS17DefCntrgrpMinCalUnit_polCodeMerged_checkNull"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( polCodeMerged=="NULL" || polCodeMerged not matches("^[A-Za-z0-9|]{1,100}$") || (isMerge=="Y" && polCodeMerged=="NULL") ||(isMerge=="N" && polCodeMerged!="NULL"))
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"被合并产品精算代码不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"被合并产品精算代码不符合规则 \n");
+    end
+
+
+rule "IFRS17DefCntrgrpMinCalUnit_prodNameMerged_checkNull"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( prodNameMerged =="NULL" ||(isMerge=="Y" && prodNameMerged=="NULL") ||(isMerge=="N" && prodNameMerged!="NULL"))
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"被合并产品名称不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"被合并产品名称不符合规则\n");
+    end
+
+rule "IFRS17DefCntrgrpMinCalUnit_excOrder_checkNull"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( excOrder == null )
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"执行顺序不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"执行顺序不符合规则\n");
+    end
+
+rule "IFRS17DefCntrgrpMinCalUnit_minAccUnitName_check_EndWith"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit(minCalUnitName==null)
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"最小核算单元名称为空":ifrs17DefCntrgrpMinCalUnit.getRemark()+"最小核算单元名称为空\n");
+    end
+
+
+rule "IFRS17DefCntrgrpMinCalUnit_minCalUnitCode_checkTwo_Rule"
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit(minCalUnitCode==null|| minCalUnitCode not matches("^[A-Za-z0-9_]{1,100}$"))
+    then
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"最小计量单元编码不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"最小计量单元编码不符合规则 \n");
+    end

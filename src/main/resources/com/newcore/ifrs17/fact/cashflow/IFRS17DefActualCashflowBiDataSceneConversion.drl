@@ -1,0 +1,76 @@
+package com.newcore.ifrs17.fact.cashflow;
+import  com.newcore.ifrs17.fact.cashflow.IFRS17DefActualCashflowBiDataSceneConversion;
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_dataSource_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion( dataSource==null || dataSource not matches "^[A-Z0-9]{1,100}$")
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"业务系统代码为空或不符合规则 \n":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"业务系统代码为空或不符合规则 \n");
+
+    end
+rule "IFRS17DefActualCashflowBiDataSceneConversion_transCode_checkNULL"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion( transCode==null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"收付费项目不可为空 \n":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"收付费项目不可为空 \n");
+
+    end
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_transType_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion(transType == null || transType not in ("1","2","3","4"))
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"业务类别不可为空或不符合规则":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"业务类别不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_payType_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion(payType == null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"收付款方式不可为空":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"收付款方式不可为空 \n");
+    end
+
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_riskType_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion( riskType==null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"长短险标志不可为空 \n":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"长短险标志不可为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_typeCys_checkNULL"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion( typeCys == null || typeCys not in ("1","0"))
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"冲应收标识不可为空或不符合规则":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"冲应收标识不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_accType1_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion(accType1 == null || accType1 not matches "^[0-9]{1,100}$")
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"类型不可为空或不符合规则":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"类型不可为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_accFlag_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion(accFlag == null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"到账确认标识不可为空":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"到账确认标识不可为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_priClassification_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion(priClassification == null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"一级分类不可为空":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"一级分类不可为空 \n");
+    end
+
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_secClassification_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion( secClassification==null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"二级分类不可为空":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"二级分类不可为空 \n");
+    end
+rule "IFRS17DefActualCashflowBiDataSceneConversion_sceneName_checkNULL"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion(sceneName  == null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"场景名称不可为空":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"场景名称不可以为空 \n");
+    end
+
+rule "IFRS17DefActualCashflowBiDataSceneConversion_sceneNum_check"
+    when ifrs17DefActualCashflowBiDataSceneConversion:IFRS17DefActualCashflowBiDataSceneConversion(sceneNum == null)
+    then
+        ifrs17DefActualCashflowBiDataSceneConversion.setRemark(ifrs17DefActualCashflowBiDataSceneConversion.getRemark()==null?"场景编号不可为空":ifrs17DefActualCashflowBiDataSceneConversion.getRemark()+"场景编号不可为空 \n");
+    end
