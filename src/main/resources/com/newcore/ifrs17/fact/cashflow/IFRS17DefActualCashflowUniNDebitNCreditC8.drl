@@ -37,7 +37,7 @@ rule "IFRS17DefActualCashflowUniNDebitNCreditC8_flagCys_checkNULL"
     then
         ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"冲应收标识不可为空或不符合规则":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"冲应收标识不可为空或不符合规则 \n");
     end
-rule "IFRS17DefActualCashflowUniNDebitNCreditC8_flagCys_checkNULL"
+rule "IFRS17DefActualCashflowUniNDebitNCreditC8_accFlag_checkNULL"
     when ifrs17DefActualCashflowUniNDebitNCreditC8:IFRS17DefActualCashflowUniNDebitNCreditC8( accFlag == null || accFlag in ("1","0","2"))
     then
         ifrs17DefActualCashflowUniNDebitNCreditC8.setRemark(ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()==null?"到账确认标识不可为空或不符合规则":ifrs17DefActualCashflowUniNDebitNCreditC8.getRemark()+"到账确认标识不可为空或不符合规则 \n");

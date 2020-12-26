@@ -21,8 +21,7 @@ rule "IFRS17DefActualCashflowBiSnCvs_transType_check"
     end
 
 rule "IFRS17DefActualCashflowBiSnCvs_payType_check"
-    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(payType == null  || (payType not
-    matches"^[A-Za-z]{1,100}$" && payType not matches "^[A-Za-z0-9]{1,100}$"))
+    when ifrs17DefActualCashflowBiSnCvs:IFRS17DefActualCashflowBiSnCvs(payType == null  || (payType not matches"^[A-Za-z]{1,100}$" && payType not matches "^[A-Za-z0-9]{1,100}$"))
     then
         ifrs17DefActualCashflowBiSnCvs.setRemark(ifrs17DefActualCashflowBiSnCvs.getRemark()==null?"收付款方式为空或不符合规则":ifrs17DefActualCashflowBiSnCvs.getRemark()+"收付款方式为空或不符合规则 \n");
     end

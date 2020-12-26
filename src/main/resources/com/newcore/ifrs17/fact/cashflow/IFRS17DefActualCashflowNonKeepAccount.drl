@@ -48,7 +48,7 @@ rule "IIFRS17DefActualCashflowNonKeepAccount_accFlag_check"
 rule "IIFRS17DefActualCashflowNonKeepAccount_dataFeature_check"
     when ifrs17DefActualCashflowNonKeepAccount:IFRS17DefActualCashflowNonKeepAccount(dataFeature == null || dataFeature !="9")
     then
-        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"数据属性不可为空":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"数据属性不可为空 \n");
+        ifrs17DefActualCashflowNonKeepAccount.setRemark(ifrs17DefActualCashflowNonKeepAccount.getRemark()==null?"数据属性不可为空或不符合规则":ifrs17DefActualCashflowNonKeepAccount.getRemark()+"数据属性不可为空或不符合规则 \n");
     end
 
 
