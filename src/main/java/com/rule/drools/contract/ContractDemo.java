@@ -14,12 +14,14 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefActualCashflowNonKeepAccount");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpAnnuityConverse");
 
-        IFRS17DefActualCashflowNonKeepAccount demo = new IFRS17DefActualCashflowNonKeepAccount();
+        IFRS17DefCntrgrpAnnuityConverse demo = new IFRS17DefCntrgrpAnnuityConverse();
 
-        demo.setDataFeature("99");
-
+        demo.setPolCode("_");
+//        demo.setPolName("");
+//        demo.setIsAnnuityConversion("Y");
+//        demo.setPolCodeConverted("oio");
         ks.insert(demo);
         int count = ks.fireAllRules();
 

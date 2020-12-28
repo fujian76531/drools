@@ -12,8 +12,6 @@ public class IFRS17DefCntrgrpAnnuityConverse {
 
 
     private String polName;
-
-
     /**
      * 是否需要年金险种转换
      */
