@@ -3,24 +3,10 @@ import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpShortToLongInsur;
 
 rule "IFRS17DefCntrgrpShortToLongInsur_polCode_check"
 activation-group "polCodeCheckNull"
-    when ifrs17DefCntrgrpShortToLongInsur:IFRS17DefCntrgrpShortToLongInsur( polCode==null || polCode not matches "^[A-Z0-9]{1,10}$")
+    when ifrs17DefCntrgrpShortToLongInsur:IFRS17DefCntrgrpShortToLongInsur( polCode==null || polCode not matches "^[A-Z0-9a-z_]{1,10}$")
     then
         ifrs17DefCntrgrpShortToLongInsur.setRemark("精算代码为空或不符合规则 \n");
     end
-
-rule "IFRS17DefCntrgrpShortToLongInsur_polCode_checkNull"
-activation-group "polCodeCheckNull"
-    when ifrs17DefCntrgrpShortToLongInsur:IFRS17DefCntrgrpShortToLongInsur( polCode=="NULL")
-    then
-        ifrs17DefCntrgrpShortToLongInsur.setRemark(ifrs17DefCntrgrpShortToLongInsur.getRemark()==null?"精算代码不可为NULL":ifrs17DefCntrgrpShortToLongInsur.getRemark()+"精算代码不可为NULL \n" );
-    end
-
-rule "IFRS17DefActualCashflowBiDataSceneConversion_polName_check"
-    when ifrs17DefCntrgrpShortToLongInsur:IFRS17DefCntrgrpShortToLongInsur( polName==null)
-    then
-        ifrs17DefCntrgrpShortToLongInsur.setRemark(ifrs17DefCntrgrpShortToLongInsur.getRemark()==null?"产品名称不可为空":ifrs17DefCntrgrpShortToLongInsur.getRemark()+"产品名称不可为空 \n");
-    end
-
 rule "IFRS17DefActualCashflowBiDataSceneConversion_isLongTermInsur_check"
     when ifrs17DefCntrgrpShortToLongInsur:IFRS17DefCntrgrpShortToLongInsur(isLongTermInsur == null || isLongTermInsur not in ("Y","N"))
     then

@@ -1,0 +1,13 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefContrgrpVirtualAccount;
+
+rule "IFRS17DefContrgrpVirtualAccount_polCode_check"
+    when ifrs1717DefContrgrpVirtualAccount:IFRS17DefContrgrpVirtualAccount( polCode==null || polCode not matches "^[A-Z0-9a-z_]{1,10}$")
+    then
+        ifrs1717DefContrgrpVirtualAccount.setRemark("精算代码为空或不符合规则 \n");
+    end
+rule "IFRS17DefContrgrpVirtualAccount_isNeedGroupcap_check"
+    when ifrs1717DefContrgrpVirtualAccount:IFRS17DefContrgrpVirtualAccount(isNeedGroupcap == null || isNeedGroupcap not in ("Y","N"))
+    then
+        ifrs1717DefContrgrpVirtualAccount.setRemark(ifrs1717DefContrgrpVirtualAccount.getRemark()==null?"是否需要生成团帽单不可为空或不符合规则":ifrs1717DefContrgrpVirtualAccount.getRemark()+"是否需要生成团帽单不可为空或不符合规则 \n");
+    end
