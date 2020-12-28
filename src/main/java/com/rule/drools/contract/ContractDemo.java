@@ -15,11 +15,11 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpDsntypeAndRkcover");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpMinCalUnit");
 
-        IFRS17DefCntrgrpDsntypeAndRkcover demo = new IFRS17DefCntrgrpDsntypeAndRkcover();
+        IFRS17DefCntrgrpMinCalUnit demo = new IFRS17DefCntrgrpMinCalUnit();
 
-//        demo.setPolCode("_");
+        demo.setIsMerge("Y");
 //        demo.setPolName("");
 //        demo.setIsAnnuityConversion("Y");
 //        demo.setPolCodeConverted("oio");
