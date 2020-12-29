@@ -2,7 +2,6 @@ package com.newcore.ifrs17.fact.contract;
 import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpDsntypeAndRkcover;
 
 rule "IFRS17DefCntrgrpDsntypeAndRkcover_polCode_check"
-activation-group "polCodeCheck"
     when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover( polCode==null || polCode.toUpperCase()=="NULL" ||polCode not matches "^[A-Za-z0-9_]$")
     then
         ifrs7DefCntrgrpDsntypeAndRkcover.setRemark("精算代码为空或不符合规则 \n");
@@ -10,34 +9,28 @@ activation-group "polCodeCheck"
 rule "IFRS17DefCntrgrpDsntypeAndRkcover_designCode_check"
     when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(designCode ==null||designCode.toUpperCase()=="NULL"||designCode.length()>10 || designCode not matches "^[A-Za-z0-9_]{1,10}$")
     then
-        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"设计类型编码为空或者输入不正确":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"设计类型编码为空或者输入不正确 \n");
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"设计类型编码为空或者输入不正确 \n":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"设计类型编码为空或者输入不正确 \n");
     end
 
 rule "IFRS17DefCntrgrpDsntypeAndRkcover_riskCoverCode_check"
     when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(riskCoverCode==null||riskCoverCode.toUpperCase()=="NULL"||riskCoverCode.length()>10 || riskCoverCode not matches "^[A-Za-z0-9_]{1,10}$")
     then
-        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"覆盖风险编码为空或者长度不符合规则":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"覆盖风险编码为空或者长度不符合规则 \n");
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"覆盖风险编码为空或者长度不符合规则 \n":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"覆盖风险编码为空或者长度不符合规则 \n");
     end
-/*rule "IFRS17DefCntrgrpDsntypeAndRkcover_polCode_checkNull"
-activation-group "polCodeCheck"
-    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover( polCode.toUpperCase()=="NULL")
-    then
-        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark("精算代码为不可为NULL \n");
-    end
+
 rule "IFRS17DefCntrgrpDsntypeAndRkcover_polName_check"
-    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(polName==null)
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(polName != null && polName.trim() == "")
     then
-        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"产品名称为空或者输入不正确":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"产品名称为空或者输入不正确 \n");
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"产品名称为空或者输入不正确 \n":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"产品名称为空或者输入不正确 \n");
     end
 
 rule "IFRS17DefCntrgrpDsntypeAndRkcover_designType_check"
-    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(designType==null)
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(designType != null && designType.trim() == "")
     then
-        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"设计类型为空":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"设计类型为空 \n");
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"设计类型为空 \n":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"设计类型为空 \n");
     end
 rule "IFRS17DefCntrgrpDsntypeAndRkcover_riskCover_check"
-    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(riskCover==null)
+    when ifrs7DefCntrgrpDsntypeAndRkcover:IFRS17DefCntrgrpDsntypeAndRkcover(riskCover != null && riskCover.trim() == "")
     then
-        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"覆盖风险为不能为空":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"覆盖风险为不能为空 \n");
+        ifrs7DefCntrgrpDsntypeAndRkcover.setRemark(ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()==null?"覆盖风险为不能为空 \n":ifrs7DefCntrgrpDsntypeAndRkcover.getRemark()+"覆盖风险为不能为空 \n");
     end
-*/
