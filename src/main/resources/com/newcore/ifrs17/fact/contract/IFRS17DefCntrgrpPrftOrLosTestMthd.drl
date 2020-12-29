@@ -2,19 +2,18 @@ package com.newcore.ifrs17.fact.contract;
 import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpPrftOrLosTestMthd;
 
 rule "IFRS17DefCntrgrpPrftOrLosTestMthd_minAccUnitCode_check"
-    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd( minAccUnitCode==null || minAccUnitCode.length()>20 || minAccUnitCode not matches("^[A-Z0-9_]{1,20}$"))
+    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd( minAccUnitCode==null || minAccUnitCode.length()>20 || minAccUnitCode not matches("^[A-Za-z0-9_]{1,20}$"))
     then
-        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark("最小核算单元编码为空或不符合规则, \n");
+        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark("最小核算单元编码为空或不符合规则 \n");
     end
-
 rule "IFRS17DefCntrgrpPrftOrLosTestMthd_minAccUnitName_check"
-    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(minAccUnitName == null)
+    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(minAccUnitName != null && minAccUnitName.trim() == "")
     then
-        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"最小核算单元名称名称为空":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"最小核算单元名称名称为空 \n");
+        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"最小核算单元名称名称为空 \n":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"最小核算单元名称名称为空 \n");
     end
 rule "IFRS17DefCntrgrpPrftOrLosTestMthd_polCodeNull_check"
 activation-group "polCode-check"
-    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(polCode == null )
+    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(polCode==null || polCode.toLowerCase() =="null" || polCode.length() == 0)
     then
         ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"产品精算代码为空 \n":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"产品精算代码为空 \n");
     end
@@ -22,17 +21,17 @@ rule "IFRS17DefCntrgrpPrftOrLosTestMthd_polCode_check"
 activation-group "polCode-check"
     when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(polCode not matches("^[A-Z0-9_]{1,10}$"))
     then
-        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"产品精算代码不符合规则":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"产品精算代码不符合规则 \n");
+        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"产品精算代码不符合规则 \n":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"产品精算代码不符合规则 \n");
     end
 
 rule "IFRS17DefCntrgrpPrftOrLosTestMthd_polName_check"
-    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(polName == null)
+    when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(polName != null && polName.trim() == "")
     then
-        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"产品名称名称为空":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"产品名称名称为空 \n");
+        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"产品名称不符合规则 \n":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"产品名称不符合规则 \n");
     end
 
 rule "IFRS17DefCntrgrpPrftOrLosTestMthd_profitOrLossTestMethod_check"
     when ifrs17DefCntrgrpPrftOrLosTestMthd:IFRS17DefCntrgrpPrftOrLosTestMthd(profitOrLossTestMethod ==null||(profitOrLossTestMethod not in ("1","2")))
     then
-        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"盈亏测试方法模块为空或者输入不正确":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"盈亏测试方法模块为空或者输入不正确 \n");
+        ifrs17DefCntrgrpPrftOrLosTestMthd.setRemark(ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()==null?"盈亏测试方法模块为空或者输入不正确 \n":ifrs17DefCntrgrpPrftOrLosTestMthd.getRemark()+"盈亏测试方法模块为空或者输入不正确 \n");
     end
