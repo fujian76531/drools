@@ -9,7 +9,7 @@ activation-group "polCodeCheck"
     end
 rule "IFRS17DefCntrgrpUnmodelModeledMapping_polCode_checkNull"
 activation-group "polCodeCheck"
-    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(polCode!=null && polCode.toUpperCase()=="NULL")
+    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(polCode!=null && (polCode.toUpperCase()=="NULL" || polCode.trim() == ""))
     then
         ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("精算代码不可为NULL \n");
     end
@@ -21,7 +21,12 @@ activation-group "isAnnuityConversionCheck"
     end
 rule "IFRS17DefCntrgrpUnmodelModeledMapping_isAnnuityConversion_checkNull"
 activation-group "isAnnuityConversionCheck"
-    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(targetPolCode!=null && targetPolCode.toUpperCase()=="NULL")
+    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(targetPolCode!=null && (targetPolCode.toUpperCase()=="NULL" || targetPolCode.trim() == ""))
     then
         ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("目标模型产品代码不可为NULL \n");
+    end
+rule "IFRS17DefCntrgrpUnmodelModeledMapping_polName_check"
+    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(polName != null && polName.trim() == "")
+    then
+        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("目标模型产品名称不可为NULL \n");
     end
