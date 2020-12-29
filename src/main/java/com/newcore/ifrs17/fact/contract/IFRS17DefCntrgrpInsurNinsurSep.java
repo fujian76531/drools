@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class IFRS17DefCntrgrpInsurNinsurSep {
     private String minCalUnitCode;
-    private String polName;
+    private String minCalUnitName;
     private String insurComponent;
     private String investComponent;
     private String embeddedDerivatives;

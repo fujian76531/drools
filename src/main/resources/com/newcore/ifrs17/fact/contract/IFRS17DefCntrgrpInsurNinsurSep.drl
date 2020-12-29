@@ -6,7 +6,11 @@ rule "IFRS17DefCntrgrpInsurNinsurSep_polCode_check"
     then
         ifrs17DefCntrgrpInsurNinsurSep.setRemark("最小计量单元的编码为空或不符合规则 \n");
     end
-
+rule "IFRS17DefCntrgrpInsurNinsurSep_minCalUnitName_check"
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep(minCalUnitName != null && minCalUnitName.trim() == "")
+    then
+        ifrs17DefCntrgrpInsurNinsurSep.setRemark(ifrs17DefCntrgrpInsurNinsurSep.getRemark()==null?"A-保险成分为空或者输入不正确":ifrs17DefCntrgrpInsurNinsurSep.getRemark()+"A-保险成分为空或者输入不正确 \n");
+    end
 rule "IFRS17DefCntrgrpInsurNinsurSep_insurComponent_check"
     when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep(insurComponent ==null||(insurComponent not in ("Y","N")))
     then
