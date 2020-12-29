@@ -9,7 +9,7 @@ activation-group "minAccUnitCodeCheck"
     end
 rule "IFRS17DefCntrgrpModelApply_minAccUnitCode_checkNull"
 activation-group "minAccUnitCodeCheck"
-    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(minAccUnitCode!=null && minAccUnitCode.toUpperCase()=="NULL")
+    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(minAccUnitCode!=null && (minAccUnitCode.toUpperCase()=="NULL" || minAccUnitCode.trim() == ""))
     then
         ifrs17DefCntrgrpModelApply.setRemark("最小核算单元编码不可为NULL \n");
     end
@@ -17,4 +17,9 @@ rule "IFRS17DefCntrgrpModelApply_isApplicability_check"
     when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(isApplicability ==null||(isApplicability not in ("1","2","3","4","5")))
     then
         ifrs17DefCntrgrpModelApply.setRemark(ifrs17DefCntrgrpModelApply.getRemark()==null?"模型适用性为空或者输入不正确":ifrs17DefCntrgrpModelApply.getRemark()+"模型适用性为空或者输入不正确 \n");
+    end
+rule "IFRS17DefCntrgrpModelApply_minAccUnitName_check"
+    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(minAccUnitName != null && minAccUnitName.trim() == "")
+    then
+        ifrs17DefCntrgrpModelApply.setRemark("目标模型产品名称不可为NULL \n");
     end
