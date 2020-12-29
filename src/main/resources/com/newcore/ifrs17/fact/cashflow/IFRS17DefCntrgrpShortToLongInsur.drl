@@ -7,7 +7,7 @@ rule "IFRS17DefCntrgrpShortToLongInsur_polCode_check"
         ifrs17DefCntrgrpShortToLongInsur.setRemark("精算代码为空或不符合规则 \n");
     end
 rule "IFRS17DefCntrgrpShortToLongInsur_polName_check"
-    when ifrs17DefCntrgrpShortToLongInsur:IFRS17DefCntrgrpShortToLongInsur(polName == null|| polName.toUpperCase() =="NULL" || polName.length() == 0)
+    when ifrs17DefCntrgrpShortToLongInsur:IFRS17DefCntrgrpShortToLongInsur(polName != null && polName.trim() == "")
     then
         ifrs17DefCntrgrpShortToLongInsur.setRemark(ifrs17DefCntrgrpShortToLongInsur.getRemark()==null?"产品名称为空 \n":ifrs17DefCntrgrpShortToLongInsur.getRemark()+"产品名称为空 \n");
     end

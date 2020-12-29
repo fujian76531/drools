@@ -16,9 +16,8 @@ public class ContractDemo {
         KieSession ks = kc.newKieSession("IFRS17DefCntrgrpShortToLongInsur");
 
         IFRS17DefCntrgrpShortToLongInsur demo = new IFRS17DefCntrgrpShortToLongInsur();
-        demo.setPolCode("ac");
+        demo.setPolCode("");
         demo.setPolName("");
-
 
         ks.insert(demo);
         int count = ks.fireAllRules();
