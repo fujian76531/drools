@@ -13,9 +13,9 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpUnmodelModeledMapping");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpSigRiskTest");
 
-        IFRS17DefCntrgrpUnmodelModeledMapping demo = new IFRS17DefCntrgrpUnmodelModeledMapping();
+        IFRS17DefCntrgrpSigRiskTest demo = new IFRS17DefCntrgrpSigRiskTest();
 
 //        demo.setHolderAge("Y");
 //        demo.setPolName("");

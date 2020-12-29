@@ -13,11 +13,11 @@ public class IFRS17DefCntrgrpSigRiskTest {
     /**
      * 最小计量单元编码
      */
-    private String minAccUnitCode;
+    private String minCalUnitCode;
     /**
      * 最小计量单元名称
      */
-    private String minAccUnitName;
+    private String minCalUnitName;
     /**
      * 被保险人性别
      */
