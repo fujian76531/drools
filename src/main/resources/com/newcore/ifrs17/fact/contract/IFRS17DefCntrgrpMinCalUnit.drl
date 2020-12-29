@@ -19,7 +19,7 @@ rule "IFRS17DefCntrgrpMinCalUnit_polCodeMerged_checkNull"
         ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"被合并产品精算代码不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"被合并产品精算代码不符合规则 \n");
     end
 rule "IFRS17DefCntrgrpMinCalUnit_prodNameMerged_checkNull"
-    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( (isMerge=="Y" && (prodNameMerged==null || prodNameMerged.toUpperCase() =="NULL"))|| (isMerge=="N" && (prodNameMerged !=null && prodNameMerged.toUpperCase() !="NULL"))|| prodNameMerged not matches("^[A-Za-z0-9|]{1,100}$"))
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit( (isMerge=="Y" && (prodNameMerged==null || prodNameMerged.toUpperCase() =="NULL"))|| (isMerge=="N" && (prodNameMerged !=null && prodNameMerged.toUpperCase() !="NULL")))
     then
         ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"被合并产品名称不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"被合并产品名称不符合规则\n");
     end
