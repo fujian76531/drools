@@ -11,3 +11,8 @@ rule "IFRS17DefContrgrpVirtualAccount_isNeedGroupcap_check"
     then
         ifrs1717DefContrgrpVirtualAccount.setRemark(ifrs1717DefContrgrpVirtualAccount.getRemark()==null?"是否需要生成团帽单不可为空或不符合规则":ifrs1717DefContrgrpVirtualAccount.getRemark()+"是否需要生成团帽单不可为空或不符合规则 \n");
     end
+rule "IFRS17DefContrgrpVirtualAccount_polName_check"
+    when ifrs1717DefContrgrpVirtualAccount:IFRS17DefContrgrpVirtualAccount(polName != null && polName.trim() == "")
+    then
+        ifrs1717DefContrgrpVirtualAccount.setRemark("产品名称不可为NULL \n");
+    end
