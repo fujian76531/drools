@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <kmodule xmlns="http://www.drools.org/xsd/kmodule">
 
-    <kbase name="IFRS17DefCntrgrpShortToLongInsur" packages="com.newcore.ifrs17.fact.cashflow">
-        <ksession name="IFRS17DefCntrgrpShortToLongInsur"></ksession>
+    <kbase name="IFRS17DefCntrgrpAnnuityConverse" packages="com.newcore.ifrs17.fact.contract">
+        <ksession name="IFRS17DefCntrgrpAnnuityConverse"></ksession>
     </kbase>
 
 </kmodule>

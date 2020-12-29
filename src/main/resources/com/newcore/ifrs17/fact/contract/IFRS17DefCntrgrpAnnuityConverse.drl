@@ -8,9 +8,9 @@ rule "IFRS17DefCntrgrpAnnuityConverse_polCode_check"
     end
 
 rule "IFRS17DefCntrgrpAnnuityConverse_polName_check"
-    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(polName ==null || polName.length() == 0)
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(polName != null && polName.trim() == "")
     then
-        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"产品名称为空\n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"产品名称为空 \n");
+        ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"产品名称不符合规则\n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"产品名称不符合规则 \n");
     end
 
 rule "IFRS17DefCntrgrpAnnuityConverse_isAnnuityConversion_check"
@@ -34,14 +34,13 @@ activation-group "polCodeConverted_group"
     end
 rule "IFRS17DefCntrgrpAnnuityConverse_polCodeConvertedRuleN_check"
 activation-group "polCodeConverted_group"
-    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(isAnnuityConversion == "N" &&
-    (polCodeConverted != null && (polCodeConverted.length() > 0 && polCodeConverted.toLowerCase() != "null")))
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(isAnnuityConversion == "N" &&(polCodeConverted != null && (polCodeConverted.length() > 0 && polCodeConverted.toLowerCase() != "null")))
     then
         ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"是否需要年金险种转换为N转换后险种代码必须为NULL \n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"是否需要年金险种转换为N转换后险种代码必须为NULL \n");
     end
 
 rule "IFRS17DefCntrgrpAnnuityConverse_annunityRecMode_check"
-    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(annunityRecMode==null || annunityRecMode not matches "^[A-Za-z0-9]{1,10}$")
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(annunityRecMode != null && annunityRecMode.trim() == "")
     then
         ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"年金领取方式不符合规则 \n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"年金领取方式不符合规则 \n");
     end

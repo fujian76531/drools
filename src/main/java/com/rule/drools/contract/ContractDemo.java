@@ -13,12 +13,13 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpShortToLongInsur");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpAnnuityConverse");
 
-        IFRS17DefCntrgrpShortToLongInsur demo = new IFRS17DefCntrgrpShortToLongInsur();
+        IFRS17DefCntrgrpAnnuityConverse demo = new IFRS17DefCntrgrpAnnuityConverse();
         demo.setPolCode("");
         demo.setPolName("");
-
+        demo.setAnnunityRecMode("");
+        demo.setIsAnnuityConversion("Y");
         ks.insert(demo);
         int count = ks.fireAllRules();
 
