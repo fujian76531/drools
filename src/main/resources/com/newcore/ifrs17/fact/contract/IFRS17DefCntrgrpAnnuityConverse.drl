@@ -41,7 +41,7 @@ activation-group "polCodeConverted_group"
     end
 
 rule "IFRS17DefCntrgrpAnnuityConverse_annunityRecMode_check"
-    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(annunityRecMode==null || annunityRecMode not matches "^[A-Za-z0-9]$")
+    when ifrs17DefCntrgrpAnnuityConverse:IFRS17DefCntrgrpAnnuityConverse(annunityRecMode==null || annunityRecMode not matches "^[A-Za-z0-9]{1,10}$")
     then
         ifrs17DefCntrgrpAnnuityConverse.setRemark(ifrs17DefCntrgrpAnnuityConverse.getRemark()==null?"年金领取方式不符合规则 \n":ifrs17DefCntrgrpAnnuityConverse.getRemark()+"年金领取方式不符合规则 \n");
     end

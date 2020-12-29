@@ -8,13 +8,13 @@ rule "IFRS17DefCntrgrpDiscreParticiPol_polCode_check"
     end
 
 rule "IFRS17DefCntrgrpDiscreParticiPol_polName_check"
-    when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol(polName == null)
+    when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol(polName == null|| polName.toUpperCase() =="NULL")
     then
-        ifrs17DefCntrgrpDiscreParticiPol.setRemark(ifrs17DefCntrgrpDiscreParticiPol.getRemark()==null?"产品名称为空":ifrs17DefCntrgrpDiscreParticiPol.getRemark()+"产品名称为空 \n");
+        ifrs17DefCntrgrpDiscreParticiPol.setRemark(ifrs17DefCntrgrpDiscreParticiPol.getRemark()==null?"产品名称为空 \n":ifrs17DefCntrgrpDiscreParticiPol.getRemark()+"产品名称为空 \n");
     end
 
 rule "IFRS17DefCntrgrpDiscreParticiPol_discreParticipationPol_check"
     when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol(discreParticipationPol ==null||(discreParticipationPol not in ("Y","N")))
     then
-        ifrs17DefCntrgrpDiscreParticiPol.setRemark(ifrs17DefCntrgrpDiscreParticiPol.getRemark()==null?"具有相机参与分红特征产品为空或者输入不正确":ifrs17DefCntrgrpDiscreParticiPol.getRemark()+"具有相机参与分红特征产品为空或者输入不正确 \n");
+        ifrs17DefCntrgrpDiscreParticiPol.setRemark(ifrs17DefCntrgrpDiscreParticiPol.getRemark()==null?"具有相机参与分红特征产品为空或者输入不正确 \n":ifrs17DefCntrgrpDiscreParticiPol.getRemark()+"具有相机参与分红特征产品为空或者输入不正确 \n");
     end

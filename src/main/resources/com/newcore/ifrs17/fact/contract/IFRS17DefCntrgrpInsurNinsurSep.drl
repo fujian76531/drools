@@ -2,7 +2,7 @@ package com.newcore.ifrs17.fact.contract;
 import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpInsurNinsurSep;
 
 rule "IFRS17DefCntrgrpInsurNinsurSep_polCode_check"
-    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep( polCode==null ||  polCode not matches "^[A-Z0-9_]{1,20}$")
+    when ifrs17DefCntrgrpInsurNinsurSep:IFRS17DefCntrgrpInsurNinsurSep( minCalUnitCode==null || minCalUnitCode.toUpperCase() =="NULL"|| minCalUnitCode not matches "^[A-Za-z0-9_]{1,20}$")
     then
         ifrs17DefCntrgrpInsurNinsurSep.setRemark("最小计量单元的编码为空或不符合规则 \n");
     end

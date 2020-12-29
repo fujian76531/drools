@@ -13,14 +13,12 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpMinCalUnit");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpShortToLongInsur");
 
-        IFRS17DefCntrgrpMinCalUnit demo = new IFRS17DefCntrgrpMinCalUnit();
+        IFRS17DefCntrgrpShortToLongInsur demo = new IFRS17DefCntrgrpShortToLongInsur();
         demo.setPolCode("ac");
-        demo.setPolName("2w");
-        demo.setIsMerge("Y");
-        demo.setProdNameMerged("Y");
-        demo.setPolCodeMerged("Y");
+        demo.setPolName("");
+
 
         ks.insert(demo);
         int count = ks.fireAllRules();
