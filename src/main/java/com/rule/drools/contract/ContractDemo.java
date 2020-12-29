@@ -1,9 +1,7 @@
 package com.rule.drools.contract;
 
 import com.newcore.ifrs17.fact.cashflow.*;
-import com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpAnnuityConverse;
-import com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpDsntypeAndRkcover;
-import com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpMinCalUnit;
+import com.newcore.ifrs17.fact.contract.*;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -15,11 +13,11 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpMinCalUnit");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpModelApply");
 
-        IFRS17DefCntrgrpMinCalUnit demo = new IFRS17DefCntrgrpMinCalUnit();
+        IFRS17DefCntrgrpModelApply demo = new IFRS17DefCntrgrpModelApply();
 
-        demo.setIsMerge("Y");
+//        demo.setHolderAge("Y");
 //        demo.setPolName("");
 //        demo.setIsAnnuityConversion("Y");
 //        demo.setPolCodeConverted("oio");

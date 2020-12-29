@@ -3,24 +3,16 @@ import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpModelApply;
 
 rule "IFRS17DefCntrgrpModelApply_minAccUnitCode_check"
 activation-group "minAccUnitCodeCheck"
-    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply( minAccUnitCode==null || minAccUnitCode.length()>20 || minAccUnitCode not matches("^[A-Z0-9_]{1,20}$"))
+    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply( minAccUnitCode==null||minAccUnitCode not matches("^[A-Za-z0-9_]$"))
     then
         ifrs17DefCntrgrpModelApply.setRemark("最小核算单元编码为空或不符合规则 \n");
     end
-
 rule "IFRS17DefCntrgrpModelApply_minAccUnitCode_checkNull"
 activation-group "minAccUnitCodeCheck"
-    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply( minAccUnitCode=="NULL")
+    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(minAccUnitCode!=null && minAccUnitCode.toUpperCase()=="NULL")
     then
         ifrs17DefCntrgrpModelApply.setRemark("最小核算单元编码不可为NULL \n");
     end
-
-rule "IFRS17DefCntrgrpModelApply_minAccUnitName_check"
-    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(minAccUnitName == null)
-    then
-        ifrs17DefCntrgrpModelApply.setRemark(ifrs17DefCntrgrpModelApply.getRemark()==null?"最小核算单元名称为空":ifrs17DefCntrgrpModelApply.getRemark()+"最小核算单元名称为空 \n");
-    end
-
 rule "IFRS17DefCntrgrpModelApply_isApplicability_check"
     when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(isApplicability ==null||(isApplicability not in ("1","2","3","4","5")))
     then
