@@ -8,7 +8,7 @@ rule "IFRS17DefCntrgrpDiscreParticiPol_polCode_check"
     end
 
 rule "IFRS17DefCntrgrpDiscreParticiPol_polName_check"
-    when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol(polName == null|| polName.toUpperCase() =="NULL")
+    when ifrs17DefCntrgrpDiscreParticiPol:IFRS17DefCntrgrpDiscreParticiPol(polName != null && polName.trim() == "")
     then
         ifrs17DefCntrgrpDiscreParticiPol.setRemark(ifrs17DefCntrgrpDiscreParticiPol.getRemark()==null?"产品名称为空 \n":ifrs17DefCntrgrpDiscreParticiPol.getRemark()+"产品名称为空 \n");
     end
