@@ -17,13 +17,10 @@ public class ContractDemo {
 
         IFRS17DefCntrgrpSigRiskTest demo = new IFRS17DefCntrgrpSigRiskTest();
 
-        demo.setMinCalUnitCode("null");
-        demo.setMinCalUnitName("null");
+        demo.setMinCalUnitCode("Y21");
+        demo.setInsurDurAmnt("null");
+        demo.setAnnuityRecItrvl("");
 
-        demo.setInsuredSex("null");
-        demo.setInsuredAge("null");
-        demo.setInsurDurUnit("null");
-        demo.setAnnuityRecType("null");
         ks.insert(demo);
         int count = ks.fireAllRules();
 

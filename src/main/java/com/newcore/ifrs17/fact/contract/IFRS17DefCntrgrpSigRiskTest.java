@@ -59,7 +59,7 @@ public class IFRS17DefCntrgrpSigRiskTest {
     /**
      * 重大风险测试结果
      */
-    private int sigRiskTestResult;
+    private String sigRiskTestResult;
     /**
      * 配置信息生效日期*/
 
