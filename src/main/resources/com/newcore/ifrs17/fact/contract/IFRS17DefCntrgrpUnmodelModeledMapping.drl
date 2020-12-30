@@ -2,31 +2,18 @@ package com.newcore.ifrs17.fact.contract;
 import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpUnmodelModeledMapping;
 
 rule "IFRS17DefCntrgrpUnmodelModeledMapping_polCode_check"
-activation-group "polCodeCheck"
-    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping( polCode==null || polCode not matches "^[A-Za-z0-9_]$")
+    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping( polCode==null || polCode.trim() == "" ||polCode.trim().toUpperCase() == "NULL" ||polCode not matches("^[A-Za-z0-9_]*$"))
     then
         ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("精算代码为空或不符合规则 \n");
     end
-rule "IFRS17DefCntrgrpUnmodelModeledMapping_polCode_checkNull"
-activation-group "polCodeCheck"
-    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(polCode!=null && (polCode.toUpperCase()=="NULL" || polCode.trim() == ""))
-    then
-        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("精算代码不可为NULL \n");
-    end
+
 rule "IFRS17DefCntrgrpUnmodelModeledMapping_isAnnuityConversion_check"
-activation-group "isAnnuityConversionCheck"
-    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(targetPolCode==null ||targetPolCode not matches "^[A-Za-z0-9_]$")
+    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(targetPolCode==null || targetPolCode.trim() == "" ||targetPolCode.trim().toUpperCase() == "NULL" ||targetPolCode not matches("^[A-Za-z0-9_]*$"))
     then
-        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark(ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()==null?"目标模型产品代码为空或不符合规则":ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()+"目标模型产品代码为空或不符合规则 \n");
-    end
-rule "IFRS17DefCntrgrpUnmodelModeledMapping_isAnnuityConversion_checkNull"
-activation-group "isAnnuityConversionCheck"
-    when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(targetPolCode!=null && (targetPolCode.toUpperCase()=="NULL" || targetPolCode.trim() == ""))
-    then
-        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("目标模型产品代码不可为NULL \n");
+        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark(ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()==null?"目标模型产品代码为空或不符合规则 \n":ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()+"目标模型产品代码为空或不符合规则 \n");
     end
 rule "IFRS17DefCntrgrpUnmodelModeledMapping_polName_check"
     when ifrs17DefCntrgrpUnmodelModeledMapping:IFRS17DefCntrgrpUnmodelModeledMapping(polName != null && polName.trim() == "")
     then
-        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark("目标模型产品名称不可为NULL \n");
+        ifrs17DefCntrgrpUnmodelModeledMapping.setRemark(ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()==null?"产品名称为空或不符合规则 \n":ifrs17DefCntrgrpUnmodelModeledMapping.getRemark()+"产品名称为空或不符合规则 \n");
     end

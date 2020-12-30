@@ -17,8 +17,8 @@ rule "IFRS17DefCntrgrpSigRiskTest_insuredSex_check"
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"被保险人性别输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"被保险人性别输入不正确 \n");
     end
-rule "IFRS17DefCntrgrpSigRiskTest_insuredAge_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insuredAge == null ||(insuredAge !=null&&(insuredAge.trim().toUpperCase()!="NULL"&&insuredAge not matches("^[0-9]*$"))))
+rule "IFRS17DefCntrgrpSigRiskTest_insuredAge_check" //insuredAge == null ||(insuredAge !=null&&(insuredAge.trim().toUpperCase()!="NULL"&&insuredAge not matches("^[0-9]*$")))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insuredAge == null || (insuredAge!=null&&insuredAge.length() == 0) || (insuredAge.trim().toUpperCase()!="NULL"&&insuredAge not matches("^[0-9]*$")))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"被保险人投保年龄为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"被保险人投保年龄为空或者输入不正确 \n");
     end

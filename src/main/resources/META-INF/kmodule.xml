@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <kmodule xmlns="http://www.drools.org/xsd/kmodule">
 
-    <kbase name="IFRS17DefCntrgrpSigRiskTest" packages="com.newcore.ifrs17.fact.contract">
-        <ksession name="IFRS17DefCntrgrpSigRiskTest"></ksession>
+    <kbase name="IFRS17DefCntrgrpUnmodelModeledMapping" packages="com.newcore.ifrs17.fact.contract">
+        <ksession name="IFRS17DefCntrgrpUnmodelModeledMapping"></ksession>
     </kbase>
 
 </kmodule>

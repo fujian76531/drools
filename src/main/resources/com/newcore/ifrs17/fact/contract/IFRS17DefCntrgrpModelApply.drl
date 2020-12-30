@@ -2,24 +2,17 @@ package com.newcore.ifrs17.fact.contract;
 import  com.newcore.ifrs17.fact.contract.IFRS17DefCntrgrpModelApply;
 
 rule "IFRS17DefCntrgrpModelApply_minAccUnitCode_check"
-activation-group "minAccUnitCodeCheck"
-    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply( minAccUnitCode==null||minAccUnitCode not matches("^[A-Za-z0-9_]$"))
+    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply( minAccUnitCode==null || minAccUnitCode.trim() == "" ||minAccUnitCode.trim().toUpperCase() == "NULL" ||minAccUnitCode not matches("^[A-Za-z0-9_]*$"))
     then
         ifrs17DefCntrgrpModelApply.setRemark("最小核算单元编码为空或不符合规则 \n");
-    end
-rule "IFRS17DefCntrgrpModelApply_minAccUnitCode_checkNull"
-activation-group "minAccUnitCodeCheck"
-    when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(minAccUnitCode!=null && (minAccUnitCode.toUpperCase()=="NULL" || minAccUnitCode.trim() == ""))
-    then
-        ifrs17DefCntrgrpModelApply.setRemark("最小核算单元编码不可为NULL \n");
     end
 rule "IFRS17DefCntrgrpModelApply_isApplicability_check"
     when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(isApplicability ==null||(isApplicability not in ("1","2","3","4","5")))
     then
-        ifrs17DefCntrgrpModelApply.setRemark(ifrs17DefCntrgrpModelApply.getRemark()==null?"模型适用性为空或者输入不正确":ifrs17DefCntrgrpModelApply.getRemark()+"模型适用性为空或者输入不正确 \n");
+        ifrs17DefCntrgrpModelApply.setRemark(ifrs17DefCntrgrpModelApply.getRemark()==null?"模型适用性为空或者输入不正确 \n":ifrs17DefCntrgrpModelApply.getRemark()+"模型适用性为空或者输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpModelApply_minAccUnitName_check"
     when ifrs17DefCntrgrpModelApply:IFRS17DefCntrgrpModelApply(minAccUnitName != null && minAccUnitName.trim() == "")
     then
-        ifrs17DefCntrgrpModelApply.setRemark("目标模型产品名称不可为NULL \n");
+        ifrs17DefCntrgrpModelApply.setRemark(ifrs17DefCntrgrpModelApply.getRemark()==null?"最小核算单元名称为空或不符合规则 \n":ifrs17DefCntrgrpModelApply.getRemark()+"最小核算单元名称为空或不符合规则 \n");
     end
