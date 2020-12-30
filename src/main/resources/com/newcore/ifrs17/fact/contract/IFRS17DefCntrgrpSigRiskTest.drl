@@ -15,57 +15,57 @@ activation-group "minAccUnitCodeCheck"
         ifrs17DefCntrgrpSigRiskTest.setRemark("最小计量单元编码为空或不符合规则 \n");
     end
  rule "IFRS17DefCntrgrpSigRiskTest_minCalUnitName_check"
-     when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(minCalUnitName != null && minCalUnitName.trim() == "")
+     when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(minCalUnitName == null || (minCalUnitName != null && minCalUnitName.trim() == ""))
      then
-         ifrs17DefCntrgrpSigRiskTest.setRemark("最小计量单元名称为空或不符合规则 \n");
+         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"最小计量单元名称为空或不符合规则 \n":ifrs17DefCntrgrpSigRiskTest.getRemark()+"最小计量单元名称为空或不符合规则 \n");
      end
 rule "IFRS17DefCntrgrpSigRiskTest_insuredSex_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insuredSex !=null&&(insuredSex not in ("M","F")||insuredSex.toUpperCase()=="NULL") )
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insuredSex == null || (insuredSex !=null&&insuredSex.toUpperCase() not in ("M","F","NULL")))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"被保险人性别输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"被保险人性别输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_insuredAge_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insuredAge !=null&&(insuredAge not matches("^[0-9]*$")||insuredAge.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insuredAge == null ||(insuredAge !=null&&(insuredAge.trim().toUpperCase()!="NULL"&&insuredAge not matches("^[0-9]*$"))))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"被保险人投保年龄为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"被保险人投保年龄为空或者输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_insurDurUnit_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insurDurUnit !=null&&(insurDurUnit not matches("^[0-9]*$")||insurDurUnit.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insurDurUnit == null ||(insurDurUnit !=null&&(insurDurUnit.trim().toUpperCase()!="NULL"&&insurDurUnit not matches("^[0-9]*$"))))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"保险期间类型为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"保险期间类型为空或者输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_insurDurAmnt_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insurDurAmnt !=null&&(insurDurAmnt not matches("^[0-9]*$")||insurDurAmnt.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(insurDurAmnt == null ||(insurDurAmnt !=null&&(insurDurAmnt.trim().toUpperCase()!="NULL"&&insurDurAmnt not matches("^[0-9]*$"))))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"保险期间为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"保险期间为空或者输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_moneyinDurUnit_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(moneyinDurUnit !=null&&(moneyinDurUnit not matches("^[0-9]*$")||moneyinDurUnit.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(moneyinDurUnit == null ||(moneyinDurUnit !=null&&(moneyinDurUnit.trim().toUpperCase()!="NULL"&&moneyinDurUnit not matches("^[0-9]*$"))))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"缴费期间类型为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"缴费期间类型为空或者输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_moneyinDurAmnt_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(moneyinDurAmnt !=null&&(moneyinDurAmnt not matches("^[0-9]*$")||moneyinDurAmnt.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(moneyinDurAmnt == null ||(moneyinDurAmnt !=null&&(moneyinDurAmnt.trim().toUpperCase()!="NULL"&&moneyinDurAmnt not matches("^[0-9]*$"))))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"缴费期间为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"缴费期间为空或者输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_annuityRecType_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecType!=null&&(annuityRecType not in ("01","02","03","04","05","06","07","08","A","B","C","D","E","F") || annuityRecType.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecType == null ||(annuityRecType!=null&&(annuityRecType not in ("01","02","03","04","05","06","07","08","A","B","C","D","E","F") && annuityRecType.trim().toUpperCase()!="NULL")))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"年金领取类型为空或格式不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"年金领取类型为空或格式不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_annuityRecItrvl_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecItrvl!=null&&(annuityRecItrvl not in ("Y","H","Q","M","W")|| annuityRecItrvl.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecItrvl == null ||(annuityRecItrvl!=null&&(annuityRecItrvl not in ("Y","H","Q","M","W")&& annuityRecItrvl.trim().toUpperCase()!="NULL")))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"年金领取频率为空或者不符合规则":ifrs17DefCntrgrpSigRiskTest.getRemark()+"年金领取频率为空或者不符合规则 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_annuityRecAge_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecAge!=null && (annuityRecAge not matches("^[0-9]{1,3}$") || annuityRecAge.toUpperCase()!="NULL"))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecAge == null || (annuityRecAge!=null && (annuityRecAge not matches("^[0-9]{1,3}$") && annuityRecAge.trim().toUpperCase()!="NULL")))
     then
          ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"年金领取年龄为空或者不符合规则":ifrs17DefCntrgrpSigRiskTest.getRemark()+"年金领取年龄为空或者不符合规则 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_sigRiskTestResult_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(sigRiskTestResult ==null||(sigRiskTestResult not in (1,2)))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(sigRiskTestResult ==null||(sigRiskTestResult not matches("^[1-2]{1}$")))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"重大风险测试结果为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"重大风险测试结果为空或者输入不正确 \n");
     end
