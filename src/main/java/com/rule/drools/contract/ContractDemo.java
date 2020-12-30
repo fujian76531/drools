@@ -13,11 +13,11 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpMinCalUnit");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpPrftOrLosTestMthd");
 
-        IFRS17DefCntrgrpMinCalUnit demo = new IFRS17DefCntrgrpMinCalUnit();
-        demo.setPolCode("");
-        demo.setPolName("");
+        IFRS17DefCntrgrpPrftOrLosTestMthd demo = new IFRS17DefCntrgrpPrftOrLosTestMthd();
+
+        demo.setMinAccUnitCode("");
         ks.insert(demo);
         int count = ks.fireAllRules();
 
