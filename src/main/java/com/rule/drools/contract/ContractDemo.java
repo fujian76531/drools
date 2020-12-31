@@ -13,13 +13,22 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpUnmodelModeledMapping");
+        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpPrftOrLosTest");
 
-        IFRS17DefCntrgrpUnmodelModeledMapping demo = new IFRS17DefCntrgrpUnmodelModeledMapping();
+        IFRS17DefCntrgrpPrftOrLosTest demo = new IFRS17DefCntrgrpPrftOrLosTest();
 
-        demo.setPolCode(" ");
-        demo.setPolName(" ");
-        demo.setTargetPolCode(" ");
+        demo.setType("2");
+        demo.setMinAccUnitCode("2");
+        demo.setAnnualizedPremiumCeiling("1");
+        demo.setAnnualizedPremiumFloor("8");
+        demo.setFaceAmntCeiling("1");
+        demo.setFaceAmntFloor("8");
+
+        demo.setInsurDurAmnt("1.1");
+        demo.setMoneyinDurAmnt("1");
+        demo.setInsurDurUnit("1");
+        demo.setInsuredAge("2.1");
+        demo.setMoneyinDurAmnt("1");
 
         ks.insert(demo);
         int count = ks.fireAllRules();

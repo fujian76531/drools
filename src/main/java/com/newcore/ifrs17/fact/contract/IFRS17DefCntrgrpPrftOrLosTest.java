@@ -11,11 +11,11 @@ public class IFRS17DefCntrgrpPrftOrLosTest {
     /**
      *最小核算单元编码
      */
-    private String minCalUnitCode;
+    private String minAccUnitCode;
     /**
      * 最小核算单元名称
      */
-    private String minCalUnitName;
+    private String minAccUnitName;
     /**
      * 被保险人投保年龄
      */
@@ -68,10 +68,7 @@ public class IFRS17DefCntrgrpPrftOrLosTest {
      * 保额下限
      */
     private String faceAmntFloor;
-    /**
-     * 盈亏测试结果
-     */
-    private String profitOrLossTestResult;
+
 
     /**
      * 年金领取类型
@@ -87,7 +84,12 @@ public class IFRS17DefCntrgrpPrftOrLosTest {
      * 年金领取年龄
      */
     private String annuityRecAge;
-
+    /**
+     * 盈亏测试结果
+     */
+    private String profitOrLossTestResult;
+    private String giftType;
+    private String bonusProp;
     /**
      * 配置信息生效日期
      */
