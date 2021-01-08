@@ -86,7 +86,7 @@ rule "ifrs17DefCntrgrpPrftOrLosTest_faceAmntCeilingFloor_Rule_check"
 activation-group "faceAmntCeilingFloor"
     when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest((type != null && type.trim()=="1"&&faceAmntCeiling!=null && faceAmntFloor != null&&(faceAmntCeiling!=null&&faceAmntFloor!=null&&faceAmntCeiling.toUpperCase()!="NULL"||faceAmntFloor.toUpperCase()!="NULL"))||(type != null &&type.trim().toUpperCase()=="NULL"&& (faceAmntCeiling!=null&&faceAmntFloor!=null&&faceAmntCeiling.toUpperCase()!="NULL" || faceAmntFloor.toUpperCase()!="NULL")))
     then
-        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"判断类型为1或NULL，保额上限、下限必须为NULL \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"判断类型为2，保额上限、下限必须为NULL \n");
+        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"判断类型为1或NULL，保额上限、下限必须为NULL \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"判断类型为1或NULL，保额上限、下限必须为NULL \n");
     end
 rule "ifrs17DefCntrgrpPrftOrLosTest_faceAmntCeilingFloor_Comparison_check"
 activation-group "faceAmntCeilingFloor"

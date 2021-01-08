@@ -43,7 +43,7 @@ rule "IFRS17DefCntrgrpSigRiskTest_moneyinDurAmnt_check"
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"缴费期间为空或者输入不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"缴费期间为空或者输入不正确 \n");
     end
 rule "IFRS17DefCntrgrpSigRiskTest_annuityRecType_check"
-    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecType == null ||(annuityRecType!=null&&(annuityRecType not in ("01","02","03","04","05","06","07","08","A","B","C","D","E","F") && annuityRecType.trim().toUpperCase()!="NULL")))
+    when ifrs17DefCntrgrpSigRiskTest:IFRS17DefCntrgrpSigRiskTest(annuityRecType == null ||(annuityRecType!=null&&(annuityRecType not in ("A","B","C","D","E","F") && annuityRecType.trim().toUpperCase()!="NULL")))
     then
         ifrs17DefCntrgrpSigRiskTest.setRemark(ifrs17DefCntrgrpSigRiskTest.getRemark()==null?"年金领取类型为空或格式不正确":ifrs17DefCntrgrpSigRiskTest.getRemark()+"年金领取类型为空或格式不正确 \n");
     end

@@ -19,8 +19,11 @@ rule "IFRS17DefCntrgrpMinCalUnit_isMerge_checkNull"
     end
 
 rule "IFRS17DefCntrgrpMinCalUnit_polCodeMerged_checkNull"
-    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit((isMerge=="Y" && (polCodeMerged==null || polCodeMerged.toUpperCase() =="NULL" ||polCodeMerged.trim() == ""))|| (isMerge=="N" && (polCodeMerged !=null && polCodeMerged.toUpperCase() !="NULL"))||
-    polCodeMerged not matches("^[A-Za-z0-9|]{1,100}$"))
+    when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit(
+
+    (isMerge=="Y" && (polCodeMerged==null || polCodeMerged.toUpperCase() =="NULL" ||polCodeMerged.trim() == ""))
+    || (isMerge=="N" && (polCodeMerged !=null && polCodeMerged.toUpperCase() !="NULL"))
+    || polCodeMerged not matches("^[A-Za-z0-9|]{1,100}$"))
     then
         ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"被合并产品精算代码不符合规则 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"被合并产品精算代码不符合规则 \n");
     end
@@ -43,5 +46,5 @@ rule "IFRS17DefCntrgrpMinCalUnit_minCalUnitCode_checkTwo_Rule"
 rule "IFRS17DefCntrgrpMinCalUnit_minAccUnitName_check_EndWith"
     when ifrs17DefCntrgrpMinCalUnit:IFRS17DefCntrgrpMinCalUnit(minCalUnitName != null && minCalUnitName.trim() == "")
     then
-        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"最小核算单元名称为空":ifrs17DefCntrgrpMinCalUnit.getRemark()+"最小核算单元名称为空\n");
+        ifrs17DefCntrgrpMinCalUnit.setRemark(ifrs17DefCntrgrpMinCalUnit.getRemark()==null?"最小计量名称为空 \n":ifrs17DefCntrgrpMinCalUnit.getRemark()+"最小计量单元名称为空\n");
     end
