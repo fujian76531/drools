@@ -50,7 +50,7 @@ activation-group "annualizedPremiumCeilingFloor"
         ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"年化保费上下限不符合规则或年化保费上限小于下限 \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"年化保费上下限不符合规则或年化保费上限小于下限 \n");
     end
 rule "IFRS17DefCntrgrpPrftOrLosTest_annuityRecType_check"
-   when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(annuityRecType == null ||(annuityRecType!=null&&(annuityRecType not in ("01","02","03","04","05","06","07","08","A","B","C","D","E","F") && annuityRecType.trim().toUpperCase()!="NULL")))
+   when ifrs17DefCntrgrpPrftOrLosTest:IFRS17DefCntrgrpPrftOrLosTest(annuityRecType == null ||(annuityRecType!=null&&(annuityRecType not in ("A","B","C","D","E","F") && annuityRecType.trim().toUpperCase()!="NULL")))
    then
        ifrs17DefCntrgrpPrftOrLosTest.setRemark(ifrs17DefCntrgrpPrftOrLosTest.getRemark()==null?"年金领取类型为空或格式不正确 \n":ifrs17DefCntrgrpPrftOrLosTest.getRemark()+"年金领取类型为空或格式不正确 \n");
    end
