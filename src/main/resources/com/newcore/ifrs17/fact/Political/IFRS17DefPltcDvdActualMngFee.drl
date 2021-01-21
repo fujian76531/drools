@@ -1,0 +1,18 @@
+package com.newcore.ifrs17.fact.Political;
+import  com.newcore.ifrs17.fact.Political.IFRS17DefPltcDvdActualMngFee;
+
+rule "IFRS17DefPltcDvdActualMngFee_groupNo_check"
+    when ifrs17DefPltcDvdActualMngFee:IFRS17DefPltcDvdActualMngFee( groupNo==null|| groupNo.trim() == "" ||groupNo not matches("^[0-9.]*$"))// ||groupNo.trim().toUpperCase() == "NULL"
+    then
+        ifrs17DefPltcDvdActualMngFee.setRemark("对应政保团单号为空或不符合规则 \n");
+    end
+rule "IFRS17DefPltcDvdActualMngFee_calYear_check"
+    when ifrs17DefPltcDvdActualMngFee:IFRS17DefPltcDvdActualMngFee(calYear==null || calYear.trim() == "" || calYear not matches("^[0-9]{4}$"))
+    then
+        ifrs17DefPltcDvdActualMngFee.setRemark(ifrs17DefPltcDvdActualMngFee.getRemark()==null?"保单对应计算年份空或者输入不正确 \n" :ifrs17DefPltcDvdActualMngFee.getRemark()+"保单对应计算年份为空或者输入不正确 \n");
+    end
+rule "IFRS17DefPltcDvdActualMngFee_actualMngFee_check"
+    when ifrs17DefPltcDvdActualMngFee:IFRS17DefPltcDvdActualMngFee(actualMngFee==null ||actualMngFee not matches("^\\d+(\\.\\d{1,2})?$"))
+    then
+        ifrs17DefPltcDvdActualMngFee.setRemark(ifrs17DefPltcDvdActualMngFee.getRemark()==null?"实际管理费金额为空或不符合规则 \n":ifrs17DefPltcDvdActualMngFee.getRemark()+"实际管理费金额为空或不符合规则 \n");
+    end

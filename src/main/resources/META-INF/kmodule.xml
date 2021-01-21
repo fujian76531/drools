@@ -4,5 +4,7 @@
     <kbase name="IFRS17DefCntrgrpPrftOrLosTest" packages="com.newcore.ifrs17.fact.contract">
         <ksession name="IFRS17DefCntrgrpPrftOrLosTest"></ksession>
     </kbase>
-
+    <kbase name="IFRS17DefPltcDvdActualMngFee" packages="com.newcore.ifrs17.fact.Political">
+        <ksession name="IFRS17DefPltcDvdActualMngFee"></ksession>
+    </kbase>
 </kmodule>
