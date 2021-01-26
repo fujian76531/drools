@@ -1,5 +1,6 @@
 package com.rule.drools.contract;
 
+import com.newcore.ifrs17.fact.Political.IFRS17DefPltcDvdActualMngFee;
 import com.newcore.ifrs17.fact.cashflow.*;
 import com.newcore.ifrs17.fact.contract.*;
 import org.kie.api.KieServices;
@@ -13,22 +14,12 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpPrftOrLosTest");
+        KieSession ks = kc.newKieSession("IFRS17DefPltcDvdActualMngFee");
 
-        IFRS17DefCntrgrpPrftOrLosTest demo = new IFRS17DefCntrgrpPrftOrLosTest();
+        IFRS17DefPltcDvdActualMngFee demo = new IFRS17DefPltcDvdActualMngFee();
 
-        demo.setType("2");
-        demo.setMinAccUnitCode("2");
-        demo.setAnnualizedPremiumCeiling("1");
-        demo.setAnnualizedPremiumFloor("8");
-        demo.setFaceAmntCeiling("1");
-        demo.setFaceAmntFloor("8");
+        demo.setCalYear("2");
 
-        demo.setInsurDurAmnt("1.1");
-        demo.setMoneyinDurAmnt("1");
-        demo.setInsurDurUnit("1");
-        demo.setInsuredAge("2.1");
-        demo.setMoneyinDurAmnt("1");
 
         ks.insert(demo);
         int count = ks.fireAllRules();

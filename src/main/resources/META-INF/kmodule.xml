@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <kmodule xmlns="http://www.drools.org/xsd/kmodule">
 
-    <kbase name="IFRS17DefCntrgrpPrftOrLosTest" packages="com.newcore.ifrs17.fact.contract">
-        <ksession name="IFRS17DefCntrgrpPrftOrLosTest"></ksession>
-    </kbase>
     <kbase name="IFRS17DefPltcDvdActualMngFee" packages="com.newcore.ifrs17.fact.Political">
         <ksession name="IFRS17DefPltcDvdActualMngFee"></ksession>
     </kbase>

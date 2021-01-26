@@ -1,11 +1,13 @@
 package com.newcore.ifrs17.fact.Political;
+
 import  com.newcore.ifrs17.fact.Political.IFRS17DefPltcDvdActualMngFee;
 
 rule "IFRS17DefPltcDvdActualMngFee_groupNo_check"
-    when ifrs17DefPltcDvdActualMngFee:IFRS17DefPltcDvdActualMngFee( groupNo==null|| groupNo.trim() == "" ||groupNo not matches("^[0-9.]*$"))// ||groupNo.trim().toUpperCase() == "NULL"
+    when ifrs17DefPltcDvdActualMngFee:IFRS17DefPltcDvdActualMngFee( groupNo==null|| groupNo.trim() == "" ||groupNo not matches("^[0-9]*$"))// ||groupNo.trim().toUpperCase() == "NULL"
     then
         ifrs17DefPltcDvdActualMngFee.setRemark("对应政保团单号为空或不符合规则 \n");
     end
+
 rule "IFRS17DefPltcDvdActualMngFee_calYear_check"
     when ifrs17DefPltcDvdActualMngFee:IFRS17DefPltcDvdActualMngFee(calYear==null || calYear.trim() == "" || calYear not matches("^[0-9]{4}$"))
     then
