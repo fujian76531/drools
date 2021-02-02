@@ -1,4 +1,4 @@
-package com.newcore.ifrs17.fact.Political;
+package com.newcore.ifrs17.fact.political;
 import lombok.Data;
 
 import java.math.BigDecimal;

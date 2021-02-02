@@ -1,0 +1,33 @@
+package com.newcore.ifrs17.fact.ofCommission;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOfCActualPaymentScene;
+
+rule "IFRS17DefOfCActualPaymentScene_dataType_check"
+    when ifrs17DefOfCActualPaymentScene:IFRS17DefOfCActualPaymentScene( dataType==null || dataType.trim() == ""||
+     dataType not matches "^[0-9]*$")
+    then
+        ifrs17DefOfCActualPaymentScene.setRemark("数据类型为空或不符合规则 \n");
+    end
+rule "IFRS17DefOfCActualPaymentScene_commissionType_check"
+    when ifrs17DefOfCActualPaymentScene:IFRS17DefOfCActualPaymentScene( commissionType==null || commissionType.trim() == ""||
+     commissionType not matches "^[0-9]{1,10}}$")
+    then
+        ifrs17DefOfCActualPaymentScene.setRemark(ifrs17DefOfCActualPaymentScene.getRemark()==null?"佣金类型不符合规则 " +
+         "\n":ifrs17DefOfCActualPaymentScene.getRemark()+"佣金类型不符合规则\n");
+    end
+rule "IFRS17DefOfCActualPaymentScene_commissionBatch_check"
+    when ifrs17DefOfCActualPaymentScene:IFRS17DefOfCActualPaymentScene( commissionBatch==null || commissionBatch.trim() == ""||
+     commissionBatch not matches "^[0-9]*$")
+    then
+        ifrs17DefOfCActualPaymentScene.setRemark(ifrs17DefOfCActualPaymentScene.getRemark()==null?"佣金实付批次不符合规则 \n":ifrs17DefOfCActualPaymentScene.getRemark()+"佣金实付批次不符合规则\n");
+    end
+rule "IFRS17DefOfCActualPaymentScene_accType1_check"
+    when ifrs17DefOfCActualPaymentScene:IFRS17DefOfCActualPaymentScene( accType1==null || accType1.trim() == ""||
+     accType1 not matches "^[0-9]{8}$")
+    then
+        ifrs17DefOfCActualPaymentScene.setRemark(ifrs17DefOfCActualPaymentScene.getRemark()==null?"场景编码不符合规则 \n":ifrs17DefOfCActualPaymentScene.getRemark()+"场景编码不符合规则\n");
+    end
+rule "IFRS17DefOfCActualPaymentScene_sceneName_check"
+    when ifrs17DefOfCActualPaymentScene:IFRS17DefOfCActualPaymentScene( sceneName==null || sceneName.trim() == "")
+    then
+        ifrs17DefOfCActualPaymentScene.setRemark(ifrs17DefOfCActualPaymentScene.getRemark()==null?"场景名称不符合规则 \n":ifrs17DefOfCActualPaymentScene.getRemark()+"场景名称不符合规则\n");
+    end

@@ -1,7 +1,7 @@
 package com.rule.drools.contract;
 
-import com.newcore.ifrs17.fact.cashflow.*;
-import com.newcore.ifrs17.fact.contract.*;
+import com.newcore.ifrs17.fact.ofCommission.IFRS17DefOfCAutoVerComData;
+import com.newcore.ifrs17.fact.reinsurance.IFRS17DefReinsuranceIFRS17;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -13,22 +13,12 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefCntrgrpPrftOrLosTest");
+        KieSession ks = kc.newKieSession("IFRS17DefOfCAutoVerComData");
 
-        IFRS17DefCntrgrpPrftOrLosTest demo = new IFRS17DefCntrgrpPrftOrLosTest();
+        IFRS17DefOfCAutoVerComData demo = new IFRS17DefOfCAutoVerComData();
 
-        demo.setType("2");
-        demo.setMinAccUnitCode("2");
-        demo.setAnnualizedPremiumCeiling("1");
-        demo.setAnnualizedPremiumFloor("8");
-        demo.setFaceAmntCeiling("1");
-        demo.setFaceAmntFloor("8");
-
-        demo.setInsurDurAmnt("1.1");
-        demo.setMoneyinDurAmnt("1");
-        demo.setInsurDurUnit("1");
-        demo.setInsuredAge("2.1");
-        demo.setMoneyinDurAmnt("1");
+        //demo.setReRiskTextResult("acCA");
+//        demo.setReProfitOrLossTestResultUptime("2022-11-11");
 
         ks.insert(demo);
         int count = ks.fireAllRules();

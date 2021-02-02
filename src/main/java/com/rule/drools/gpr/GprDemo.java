@@ -1,8 +1,6 @@
 package com.rule.drools.gpr;
 
-import com.newcore.ifrs17.fact.Political.IFRS17DefPltcDvdActualMngFee;
-import com.newcore.ifrs17.fact.gpr.IFRS17DefGprAnnuity1stRecPricingResve;
-import com.newcore.ifrs17.fact.gpr.IFRS17DefGprCalBaseConvert;
+import com.newcore.ifrs17.fact.political.IFRS17DefPltcDvdActualMngFee;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
