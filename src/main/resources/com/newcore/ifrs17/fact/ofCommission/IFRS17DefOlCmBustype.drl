@@ -12,18 +12,18 @@ rule "IFRS17DefOlCmBustype_businessCode_check"
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"业务类型代码不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"业务类型代码不符合规则\n");
     end
-rule "IFRS17DefOlCmBustype_businessCodeInsruction_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( businessCodeInsruction !=null && businessCodeInsruction.trim() =="")
+rule "IFRS17DefOlCmBustype_businessTypeInstruct_check"
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( businessTypeInstruct !=null && businessTypeInstruct.trim() =="")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"业务类型说明不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"业务类型说明不符合规则\n");
     end
-rule "IFRS17DefOlCmBustype_policyYear_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( policyYear==null || policyYear.trim() == "")
+rule "IFRS17DefOlCmBustype_insuranceYear_check"
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( insuranceYear==null || insuranceYear.trim() == "")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"缴费期限不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"缴费期限不符合规则\n");
     end
-rule "IFRS17DefOlCmBustype_moneyinMethod_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( moneyinMethod==null || moneyinMethod.trim() == "")
+rule "IFRS17DefOlCmBustype_payType_check"
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( payType==null || payType.trim() == "")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"缴费方式不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"缴费方式不符合规则\n");
     end
@@ -32,8 +32,8 @@ rule "IFRS17DefOlCmBustype_commisionType_check"
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"佣金类型不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"佣金类型不符合规则\n");
     end
-rule "IFRS17DefOlCmBustype_commisionTypeInsruction_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( commisionTypeInsruction != null && commisionTypeInsruction.trim() == "")
+rule "IFRS17DefOlCmBustype_commisionTypeInsruct_check"
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( commisionTypeInsruct != null && commisionTypeInsruct.trim() == "")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"佣金类型说明不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"佣金类型说明不符合规则\n");
     end

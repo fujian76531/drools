@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <kmodule xmlns="http://www.drools.org/xsd/kmodule">
 
-    <kbase name="IFRS17DefOfCAutoVerComData" packages="com.newcore.ifrs17.fact.ofCommission">
-        <ksession name="IFRS17DefOlCmBustype"></ksession>
-    </kbase>
-    <kbase name="IFRS17DefReinsuranceIFRS17" packages="com.newcore.ifrs17.fact.reinsurance">
-        <ksession name="IFRS17DefReinsuranceIFRS17"></ksession>
+    <kbase name="IFRS17DefOlPrepaidCm" packages="com.newcore.ifrs17.fact.ofCommission">
+        <ksession name="IFRS17DefOlPrepaidCm"></ksession>
     </kbase>
 </kmodule>

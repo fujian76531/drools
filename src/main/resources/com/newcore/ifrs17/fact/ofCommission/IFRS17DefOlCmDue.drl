@@ -1,0 +1,20 @@
+package com.newcore.ifrs17.fact.ofCommission;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmDue;
+
+rule "IFRS17DefOlCmDue_businessCode_check"
+    when ifrs17DefOlCmDue:IFRS17DefOlCmDue( businessCode==null || businessCode.trim() == ""||
+     businessCode not matches "^[A-Za-z0-9]{1,10}$")
+    then
+        ifrs17DefOlCmDue.setRemark("业务类型代码为空或不符合规则 \n");
+    end
+rule "IFRS17DefOlCmDue_businessCodeInsruction_check"
+    when ifrs17DefOlCmDue:IFRS17DefOlCmDue( businessCodeInsruct==null || businessCodeInsruct.trim() == "")
+    then
+        ifrs17DefOlCmDue.setRemark(ifrs17DefOlCmDue.getRemark()==null?"业务类型说明不符合规则 \n":ifrs17DefOlCmDue.getRemark()+"业务类型说明不符合规则\n");
+    end
+rule "IFRS17DefOlCmDue_fipos_check"
+    when ifrs17DefOlCmDue:IFRS17DefOlCmDue( fipos==null || fipos.trim() == "" || fipos not
+    matches "^[A-Za-z0-9]*$")
+    then
+        ifrs17DefOlCmDue.setRemark(ifrs17DefOlCmDue.getRemark()==null?"承诺项目不符合规则 \n":ifrs17DefOlCmDue.getRemark()+"承诺项目不符合规则\n");
+    end

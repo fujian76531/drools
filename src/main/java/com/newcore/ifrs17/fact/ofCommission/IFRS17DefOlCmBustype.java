@@ -23,17 +23,17 @@ public class IFRS17DefOlCmBustype {
     /**
      * 业务类型说明
      */
-    private String businessCodeInsruction;
+    private String businessTypeInstruct;
 
     /**
      * 缴费期限
      */
-    private String policyYear;
+    private String insuranceYear;
 
     /**
      * 缴费方式
      */
-    private String moneyinMethod;
+    private String payType;
 
     /**
      * 佣金类型
@@ -43,7 +43,7 @@ public class IFRS17DefOlCmBustype {
     /**
      * 佣金类型说明
      */
-    private String commisionTypeInsruction;
+    private String commisionTypeInsruct;
 
     /**
      * 备注

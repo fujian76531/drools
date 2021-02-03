@@ -5,24 +5,21 @@ import lombok.Data;
 /**
  * @author ：launcher
  * @date ：Created in 2021/1/27
- * @description：佣金实付IFRS4记账场景配置表
+ * @description：佣金IFRS4应付核算场景配置表
  */
 @Data
-public class IFRS17DefOfCActualPaymentScene {
-    /**
-     * 数据类型
-     */
-    private String dataType;
+public class IFRS17DefOlCmIfrs4DueScene {
 
     /**
-     * 佣金类型
+     * 业务类型代码
      */
-    private String commisionType;
+    private String businessCode;
 
     /**
-     * 佣金实付批次
+     * 业务类型说明
      */
-    private String commisionBatch;
+    private String businessCodeInsruct;
+
     /**
      * 场景编码
      */

@@ -1,0 +1,23 @@
+package com.newcore.ifrs17.fact.ofCommission;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmType;
+
+rule "IFRS17DefOlCmType_commisionType_check"
+    when ifrs17DefOlCmType:IFRS17DefOlCmType( commisionType==null || commisionType.trim() == ""|| commisionType not matches "^[0-9]{1,10}$")
+    then
+        ifrs17DefOlCmType.setRemark("佣金类型为空或不符合规则 \n");
+    end
+rule "IFRS17DefOlCmType_zzassess_check"
+    when ifrs17DefOlCmType:IFRS17DefOlCmType( zzassess==null || zzassess.trim() == ""|| zzassess not matches "^[0-9]*$")
+    then
+        ifrs17DefOlCmType.setRemark(ifrs17DefOlCmType.getRemark()==null?"评估方法不符合规则 \n":ifrs17DefOlCmType.getRemark()+"评估方法不符合规则\n");
+    end
+rule "IFRS17DefOlCmType_feeType_check"
+    when ifrs17DefOlCmType:IFRS17DefOlCmType( feeType==null || feeType.trim() == ""|| feeType not matches "^[0-9]*$")
+    then
+        ifrs17DefOlCmType.setRemark(ifrs17DefOlCmType.getRemark()==null?"费用类型不符合规则 \n":ifrs17DefOlCmType.getRemark()+"费用类型不符合规则\n");
+    end
+rule "IFRS17DefOlCmType_feeTypeInstruct_check"
+    when ifrs17DefOlCmType:IFRS17DefOlCmType( feeTypeInstruct ==null || feeTypeInstruct.trim() == "")
+    then
+        ifrs17DefOlCmType.setRemark(ifrs17DefOlCmType.getRemark()==null?"费用类型说明不符合规则 \n":ifrs17DefOlCmType.getRemark()+"费用类型说明不符合规则\n");
+    end

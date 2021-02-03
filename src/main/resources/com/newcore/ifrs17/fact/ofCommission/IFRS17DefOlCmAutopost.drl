@@ -1,0 +1,18 @@
+package com.newcore.ifrs17.fact.ofCommission;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmAutopost;
+
+rule "IFRS17DefOlCmAutopost_systemId_check"
+    when ifrs17DefOlCmAutopost:IFRS17DefOlCmAutopost( systemId==null || systemId.trim() == ""|| systemId not matches "^[A-Za-z]{1,10}$")
+    then
+        ifrs17DefOlCmAutopost.setRemark("源业务系统编号为空或不符合规则 \n");
+    end
+rule "IFRS17DefOlCmAutopost_companyCode_check"
+    when ifrs17DefOlCmAutopost:IFRS17DefOlCmAutopost( companyCode==null || companyCode.trim() == ""|| companyCode not matches "^[1]\\d{2}[0]$")
+    then
+        ifrs17DefOlCmAutopost.setRemark(ifrs17DefOlCmAutopost.getRemark()==null?"公司代码不符合规则 \n":ifrs17DefOlCmAutopost.getRemark()+"公司代码不符合规则\n");
+    end
+rule "IFRS17DefOlCmAutopost_autopost_check"
+    when ifrs17DefOlCmAutopost:IFRS17DefOlCmAutopost( autopost==null || autopost.trim() == ""|| autopost not in ("0","1"))
+    then
+        ifrs17DefOlCmAutopost.setRemark(ifrs17DefOlCmAutopost.getRemark()==null?"自动制证标识不符合规则 \n":ifrs17DefOlCmAutopost.getRemark()+"自动制证标识不符合规则\n");
+    end
