@@ -1,4 +1,4 @@
-package com.newcore.ifrs17.fact.ofCommission;
+package com.newcore.ifrs17.fact.olCommission;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @description：佣金实付IFRS4记账场景配置表
  */
 @Data
-public class IFRS17DefOfCActualPaymentScene {
+public class IFRS17DefOlCmPaidIfrs4 {
     /**
      * 数据类型
      */

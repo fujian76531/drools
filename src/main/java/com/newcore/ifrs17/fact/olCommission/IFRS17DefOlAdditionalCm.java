@@ -1,4 +1,4 @@
-package com.newcore.ifrs17.fact.ofCommission;
+package com.newcore.ifrs17.fact.olCommission;
 
 import lombok.Data;
 

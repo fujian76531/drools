@@ -1,9 +1,8 @@
-package com.newcore.ifrs17.fact.ofCommission;
-import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmIfrs4DueScene;
+package com.newcore.ifrs17.fact.olCommission;
+import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlCmIfrs4DueScene;
 
 rule "IFRS17DefOlCmIfrs4DueScene_businessCode_check"
-    when ifrs17DefOlCmIfrs4DueScene:IFRS17DefOlCmIfrs4DueScene( businessCode==null || businessCode.trim() == ""|| businessCode
-    not matches "^[A-Za-z0-9]{1,10}$")
+    when ifrs17DefOlCmIfrs4DueScene:IFRS17DefOlCmIfrs4DueScene( businessCode==null || businessCode.trim() == ""|| businessCode.trim().toUpperCase() =="NULL"|| businessCode not matches "^[A-Za-z0-9]{1,10}$")
     then
         ifrs17DefOlCmIfrs4DueScene.setRemark("业务类型代码为空或不符合规则 \n");
     end
@@ -13,13 +12,12 @@ rule "IFRS17DefOlCmIfrs4DueScene_businessCodeInsruct_check"
         ifrs17DefOlCmIfrs4DueScene.setRemark(ifrs17DefOlCmIfrs4DueScene.getRemark()==null?"业务类型说明不符合规则 \n":ifrs17DefOlCmIfrs4DueScene.getRemark()+"业务类型说明不符合规则\n");
     end
 rule "IFRS17DefOlCmIfrs4DueScene_accType1_check"
-    when ifrs17DefOlCmIfrs4DueScene:IFRS17DefOlCmIfrs4DueScene( accType1==null || accType1.trim() == ""|| accType1
-    not matches "^[0-9]{8}$")
+    when ifrs17DefOlCmIfrs4DueScene:IFRS17DefOlCmIfrs4DueScene( accType1==null || accType1.trim() == ""|| accType1 not matches "^[0-9]{8}$")
     then
         ifrs17DefOlCmIfrs4DueScene.setRemark(ifrs17DefOlCmIfrs4DueScene.getRemark()==null?"场景编码不符合规则 \n":ifrs17DefOlCmIfrs4DueScene.getRemark()+"场景编码不符合规则\n");
     end
 rule "IFRS17DefOlCmIfrs4DueScene_sceneName_check"
-    when ifrs17DefOlCmIfrs4DueScene:IFRS17DefOlCmIfrs4DueScene( sceneName==null || sceneName.trim() == "")
+    when ifrs17DefOlCmIfrs4DueScene:IFRS17DefOlCmIfrs4DueScene( sceneName==null || sceneName.trim() == ""|| sceneName.trim().toUpperCase() =="NULL")
     then
         ifrs17DefOlCmIfrs4DueScene.setRemark(ifrs17DefOlCmIfrs4DueScene.getRemark()==null?"场景名称不符合规则 \n":ifrs17DefOlCmIfrs4DueScene.getRemark()+"场景名称不符合规则\n");
     end

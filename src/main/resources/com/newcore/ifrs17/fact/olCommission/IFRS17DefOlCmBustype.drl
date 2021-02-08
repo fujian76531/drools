@@ -1,14 +1,13 @@
-package com.newcore.ifrs17.fact.ofCommission;
-import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmBustype;
+package com.newcore.ifrs17.fact.olCommission;
+import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlCmBustype;
 
 rule "IFRS17DefOlCmBustype_systemId_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( systemId==null || systemId.trim() == ""|| systemId not matches "^[A-Za-z]{1,10}$")
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( systemId==null || systemId.trim() == ""|| systemId.trim().toUpperCase() =="NULL" || systemId not matches "^[A-Za-z]{1,10}$")
     then
         ifrs17DefOlCmBustype.setRemark("源业务系统编号为空或不符合规则 \n");
     end
 rule "IFRS17DefOlCmBustype_businessCode_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( businessCode==null || businessCode.trim() == ""||
-    businessCode not matches "^[A-Za-z0-9]{1,10}$")
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( businessCode==null || businessCode.trim() == "" || businessCode.trim().toUpperCase() =="NULL"|| businessCode not matches "^[A-Za-z0-9]{1,10}$")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"业务类型代码不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"业务类型代码不符合规则\n");
     end
@@ -18,22 +17,22 @@ rule "IFRS17DefOlCmBustype_businessTypeInstruct_check"
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"业务类型说明不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"业务类型说明不符合规则\n");
     end
 rule "IFRS17DefOlCmBustype_insuranceYear_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( insuranceYear==null || insuranceYear.trim() == "")
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( insuranceYear==null || insuranceYear.trim() == ""|| insuranceYear.trim().toUpperCase() =="NULL")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"缴费期限不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"缴费期限不符合规则\n");
     end
 rule "IFRS17DefOlCmBustype_payType_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( payType==null || payType.trim() == "")
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( payType==null || payType.trim() == ""|| payType.trim().toUpperCase() =="NULL")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"缴费方式不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"缴费方式不符合规则\n");
     end
 rule "IFRS17DefOlCmBustype_commisionType_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( commisionType!=null && commisionType.trim() not matches "^[0-9]{1,10}$")
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( commisionType==null || commisionType.trim() == ""|| commisionType not matches "^[0-9]{1,10}$")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"佣金类型不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"佣金类型不符合规则\n");
     end
 rule "IFRS17DefOlCmBustype_commisionTypeInsruct_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( commisionTypeInsruct != null && commisionTypeInsruct.trim() == "")
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( commisionTypeInsruct != null && commisionTypeInsruct.trim() == ""|| commisionTypeInsruct.trim().toUpperCase() =="NULL")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"佣金类型说明不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"佣金类型说明不符合规则\n");
     end

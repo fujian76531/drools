@@ -1,7 +1,6 @@
 package com.rule.drools.contract;
 
-import com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmBustype;
-import com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlPrepaidCm;
+import com.newcore.ifrs17.fact.olCommission.IFRS17DefOlCmBustype;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -13,11 +12,11 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefOlPrepaidCm");
+        KieSession ks = kc.newKieSession("IFRS17DefOlCmBustype");
 
-        IFRS17DefOlPrepaidCm demo = new IFRS17DefOlPrepaidCm();
+        IFRS17DefOlCmBustype demo = new IFRS17DefOlCmBustype();
 
-        demo.setCommisionType("");
+        demo.setCommisionType("1");
 
         ks.insert(demo);
         int count = ks.fireAllRules();

@@ -1,8 +1,8 @@
-package com.newcore.ifrs17.fact.ofCommission;
-import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmAutopost;
+package com.newcore.ifrs17.fact.olCommission;
+import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlCmAutopost;
 
 rule "IFRS17DefOlCmAutopost_systemId_check"
-    when ifrs17DefOlCmAutopost:IFRS17DefOlCmAutopost( systemId==null || systemId.trim() == ""|| systemId not matches "^[A-Za-z]{1,10}$")
+    when ifrs17DefOlCmAutopost:IFRS17DefOlCmAutopost( systemId==null || systemId.trim() == ""|| systemId.trim().toUpperCase() =="NULL" || systemId not matches "^[A-Za-z]{1,10}$")
     then
         ifrs17DefOlCmAutopost.setRemark("源业务系统编号为空或不符合规则 \n");
     end

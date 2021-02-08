@@ -1,0 +1,28 @@
+package com.newcore.ifrs17.fact.olCommission;
+import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlCmPaidIfrs4;
+
+rule "IFRS17DefOlCmPaidIfrs4_dataType_check"
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( dataType==null || dataType.trim() == ""|| dataType not matches "^[0-9]*$")
+    then
+        ifrs17DefOlCmPaidIfrs4.setRemark("数据类型为空或不符合规则 \n");
+    end
+rule "IFRS17DefOlCmPaidIfrs4_commisionType_check"
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( commisionType==null || commisionType.trim() == ""|| commisionType not matches "^[0-9]{1,10}$")
+    then
+        ifrs17DefOlCmPaidIfrs4.setRemark(ifrs17DefOlCmPaidIfrs4.getRemark()==null?"佣金类型不符合规则 \n":ifrs17DefOlCmPaidIfrs4.getRemark()+"佣金类型不符合规则\n");
+    end
+rule "IFRS17DefOlCmPaidIfrs4_commisionBatch_check"
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( commisionBatch==null || commisionBatch.trim() == ""|| commisionBatch not matches "^[0-9]*$")
+    then
+        ifrs17DefOlCmPaidIfrs4.setRemark(ifrs17DefOlCmPaidIfrs4.getRemark()==null?"佣金实付批次不符合规则 \n":ifrs17DefOlCmPaidIfrs4.getRemark()+"佣金实付批次不符合规则\n");
+    end
+rule "IFRS17DefOlCmPaidIfrs4_accType1_check"
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( accType1==null || accType1.trim() == ""|| accType1 not matches "^[0-9]{8}$")
+    then
+        ifrs17DefOlCmPaidIfrs4.setRemark(ifrs17DefOlCmPaidIfrs4.getRemark()==null?"场景编码不符合规则 \n":ifrs17DefOlCmPaidIfrs4.getRemark()+"场景编码不符合规则\n");
+    end
+rule "IFRS17DefOlCmPaidIfrs4_sceneName_check"
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( sceneName !=null && sceneName.trim() == ""|| sceneName.trim().toUpperCase() =="NULL")
+    then
+        ifrs17DefOlCmPaidIfrs4.setRemark(ifrs17DefOlCmPaidIfrs4.getRemark()==null?"场景名称不符合规则 \n":ifrs17DefOlCmPaidIfrs4.getRemark()+"场景名称不符合规则\n");
+    end

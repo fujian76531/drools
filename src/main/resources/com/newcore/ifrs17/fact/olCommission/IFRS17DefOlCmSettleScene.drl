@@ -1,5 +1,5 @@
-package com.newcore.ifrs17.fact.ofCommission;
-import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlCmSettleScene;
+package com.newcore.ifrs17.fact.olCommission;
+import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlCmSettleScene;
 
 rule "IFRS17DefOlCmSettleScene_commisionType_check"
     when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( commisionType==null || commisionType.trim() == ""|| commisionType not matches "^[0-9]{1,10}$")
@@ -12,13 +12,12 @@ rule "IFRS17DefOlCmSettleScene_feeType_check"
         ifrs17DefOlCmSettleScene.setRemark(ifrs17DefOlCmSettleScene.getRemark()==null?"费用类型不符合规则 \n":ifrs17DefOlCmSettleScene.getRemark()+"费用类型不符合规则\n");
     end
 rule "IFRS17DefOlCmSettleScene_accType1_check"
-    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( accType1==null || accType1.trim() == ""|| accType1
-    not matches "^[0-9]{8}$")
+    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( accType1==null || accType1.trim() == ""|| accType1 not matches "^[0-9]{8}$")
     then
         ifrs17DefOlCmSettleScene.setRemark(ifrs17DefOlCmSettleScene.getRemark()==null?"场景编码不符合规则 \n":ifrs17DefOlCmSettleScene.getRemark()+"场景编码不符合规则\n");
     end
 rule "IFRS17DefOlCmSettleScene_sceneName_check"
-    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( sceneName==null || sceneName.trim() == "")
+    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( sceneName==null || sceneName.trim() == ""|| sceneName.trim().toUpperCase() =="NULL")
     then
         ifrs17DefOlCmSettleScene.setRemark(ifrs17DefOlCmSettleScene.getRemark()==null?"场景名称不符合规则 \n":ifrs17DefOlCmSettleScene.getRemark()+"场景名称不符合规则\n");
     end

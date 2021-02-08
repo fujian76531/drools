@@ -1,24 +1,24 @@
-package com.newcore.ifrs17.fact.ofCommission;
+package com.newcore.ifrs17.fact.olCommission;
 
 import lombok.Data;
 
 /**
  * @author ：launcher
  * @date ：Created in 2021/1/27
- * @description：佣金IFRS4应付核算场景配置表
+ * @description：佣金结转核算场景配置表
  */
 @Data
-public class IFRS17DefOlCmIfrs4DueScene {
+public class IFRS17DefOlCmSettleScene {
 
     /**
-     * 业务类型代码
+     * 佣金类型
      */
-    private String businessCode;
+    private String commisionType;
 
     /**
-     * 业务类型说明
+     * 费用类型
      */
-    private String businessCodeInsruct;
+    private String feeType;
 
     /**
      * 场景编码

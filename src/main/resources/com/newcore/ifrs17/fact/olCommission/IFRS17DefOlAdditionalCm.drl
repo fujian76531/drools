@@ -1,15 +1,13 @@
-package com.newcore.ifrs17.fact.ofCommission;
-import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlAdditionalCm;
+package com.newcore.ifrs17.fact.olCommission;
+import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlAdditionalCm;
 
 rule "IFRS17DefOlAdditionalCm_systemId_check"
-    when ifrs17DefOlAdditionalCm:IFRS17DefOlAdditionalCm( systemId==null || systemId.trim() == ""||
-    systemId not matches "^[A-Za-z]*$")
+    when ifrs17DefOlAdditionalCm:IFRS17DefOlAdditionalCm( systemId==null || systemId.trim() == ""|| systemId.trim().toUpperCase() =="NULL"||systemId not matches "^[A-Za-z]*$")
     then
         ifrs17DefOlAdditionalCm.setRemark("源业务系统编号为空或不符合规则 \n");
     end
 rule "IFRS17DefOlAdditionalCm_businessCode_check"
-    when ifrs17DefOlAdditionalCm:IFRS17DefOlAdditionalCm( businessCode==null || businessCode.trim() == ""||
-    businessCode not matches "^[A-Za-z0-9]{1,10}$")
+    when ifrs17DefOlAdditionalCm:IFRS17DefOlAdditionalCm( businessCode==null || businessCode.trim() == ""|| businessCode.trim().toUpperCase() =="NULL"||businessCode not matches "^[A-Za-z0-9]{1,10}$")
     then
         ifrs17DefOlAdditionalCm.setRemark(ifrs17DefOlAdditionalCm.getRemark()==null?"业务类型代码不符合规则 \n":ifrs17DefOlAdditionalCm.getRemark()+"业务类型代码不符合规则\n");
     end

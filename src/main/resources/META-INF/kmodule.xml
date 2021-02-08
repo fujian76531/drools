@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <kmodule xmlns="http://www.drools.org/xsd/kmodule">
 
-    <kbase name="IFRS17DefOlPrepaidCm" packages="com.newcore.ifrs17.fact.ofCommission">
-        <ksession name="IFRS17DefOlPrepaidCm"></ksession>
+    <kbase name="IFRS17DefOlCmBustype" packages="com.newcore.ifrs17.fact.olCommission">
+        <ksession name="IFRS17DefOlCmBustype"></ksession>
     </kbase>
 </kmodule>

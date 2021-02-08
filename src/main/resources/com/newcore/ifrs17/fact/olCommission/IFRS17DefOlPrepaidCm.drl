@@ -1,5 +1,5 @@
-package com.newcore.ifrs17.fact.ofCommission;
-import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOlPrepaidCm;
+package com.newcore.ifrs17.fact.olCommission;
+import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlPrepaidCm;
 
 rule "IFRS17DefOlPrepaidCm_commisionTypeOf_check"
     when ifrs17DefOlPrepaidCm:IFRS17DefOlPrepaidCm((commisionType ==null || commisionType.trim() =="") || commisionType not matches "^[0-9]{1,10}$")
