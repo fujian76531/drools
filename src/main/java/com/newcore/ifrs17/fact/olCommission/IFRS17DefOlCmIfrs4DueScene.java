@@ -21,6 +21,11 @@ public class IFRS17DefOlCmIfrs4DueScene {
     private String businessCodeInsruct;
 
     /**
+     * 佣金类型
+     */
+    private String commisionType;
+
+    /**
      * 场景编码
      */
     private String accType1;

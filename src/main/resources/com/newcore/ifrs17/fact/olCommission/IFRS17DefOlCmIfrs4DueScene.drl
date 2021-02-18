@@ -21,3 +21,8 @@ rule "IFRS17DefOlCmIfrs4DueScene_sceneName_check"
     then
         ifrs17DefOlCmIfrs4DueScene.setRemark(ifrs17DefOlCmIfrs4DueScene.getRemark()==null?"场景名称不符合规则 \n":ifrs17DefOlCmIfrs4DueScene.getRemark()+"场景名称不符合规则\n");
     end
+rule "IFRS17DefOlCmIfrs4DueScene_commisionType_check"
+    when ifrs17DefOlCmIfrs4DueScene:IFRS17DefOlCmIfrs4DueScene( commisionType==null || commisionType.trim() == ""|| commisionType != "ALL" || commisionType not matches "^[0-9]*$")
+    then
+        ifrs17DefOlCmIfrs4DueScene.setRemark(ifrs17DefOlCmIfrs4DueScene.getRemark()==null?"佣金类型不符合规则 \n":ifrs17DefOlCmIfrs4DueScene.getRemark()+"佣金类型不符合规则\n");
+    end

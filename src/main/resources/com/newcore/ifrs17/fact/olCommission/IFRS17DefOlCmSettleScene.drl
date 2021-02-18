@@ -7,7 +7,8 @@ rule "IFRS17DefOlCmSettleScene_commisionType_check"
         ifrs17DefOlCmSettleScene.setRemark("佣金类型为空或不符合规则 \n");
     end
 rule "IFRS17DefOlCmSettleScene_feeType_check"
-    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( feeType==null || feeType.trim() == "" || feeType not matches "^[0-9]{1}$")
+    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( feeType==null || feeType.trim() == "" || feeType not in ("0","1","2","9","ALL")
+    )
     then
         ifrs17DefOlCmSettleScene.setRemark(ifrs17DefOlCmSettleScene.getRemark()==null?"费用类型不符合规则 \n":ifrs17DefOlCmSettleScene.getRemark()+"费用类型不符合规则\n");
     end

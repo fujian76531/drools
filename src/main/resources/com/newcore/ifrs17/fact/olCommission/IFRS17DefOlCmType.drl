@@ -7,12 +7,12 @@ rule "IFRS17DefOlCmType_commisionType_check"
         ifrs17DefOlCmType.setRemark("佣金类型为空或不符合规则 \n");
     end
 rule "IFRS17DefOlCmType_zzassess_check"
-    when ifrs17DefOlCmType:IFRS17DefOlCmType( zzassess==null || zzassess.trim() == ""|| zzassess not matches "^[0-9]*$")
+    when ifrs17DefOlCmType:IFRS17DefOlCmType( zzassess==null || zzassess.trim() == ""|| zzassess not in ("1","2","3","4","5","ALL"))
     then
         ifrs17DefOlCmType.setRemark(ifrs17DefOlCmType.getRemark()==null?"评估方法不符合规则 \n":ifrs17DefOlCmType.getRemark()+"评估方法不符合规则\n");
     end
 rule "IFRS17DefOlCmType_feeType_check"
-    when ifrs17DefOlCmType:IFRS17DefOlCmType( feeType==null || feeType.trim() == ""|| feeType not matches "^[0-9]*$")
+    when ifrs17DefOlCmType:IFRS17DefOlCmType( feeType==null || feeType.trim() == ""|| feeType not in ("0","1","2","9"))
     then
         ifrs17DefOlCmType.setRemark(ifrs17DefOlCmType.getRemark()==null?"费用类型不符合规则 \n":ifrs17DefOlCmType.getRemark()+"费用类型不符合规则\n");
     end
