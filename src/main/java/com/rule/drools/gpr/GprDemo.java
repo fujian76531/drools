@@ -1,29 +1,37 @@
 package com.rule.drools.gpr;
 
-import com.newcore.ifrs17.fact.political.IFRS17DefPltcDvdActualMngFee;
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
+import ch.qos.logback.core.net.SyslogOutputStream;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by XiaoTao on 7/8/2020 4:18 PM
  */
 public class GprDemo {
     public static void main(String[] args){
-        KieServices kss = KieServices.Factory.get();
-        KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefPltcDvdActualMngFee");
+        List<String> list = new ArrayList<>();
+        list.add("min_acc_unit_code");
+        list.add("min_acc_unit_name");
+        list.add("is_applicability");
+        list.add("efftdate");
+        list.add("expdate");
 
-        IFRS17DefPltcDvdActualMngFee demo = new IFRS17DefPltcDvdActualMngFee();
-        demo.setGroupNo("");
-        demo.setCalYear("1234");
-        demo.setActualMngFee(BigDecimal.valueOf(1));
-        ks.insert(demo);
-        int count = ks.fireAllRules();
+        String sqler = "";
 
-        System.out.println("总执行了"+count+":"+demo.getRemark());
-        ks.dispose();
+        for (String s : list) {
+            System.out.println(s);
+        }
+        StringBuffer sb = new StringBuffer();
+        list.forEach(str-> sb.append(str).append(" varchar,"));
+        sb.deleteCharAt(sb.length()-1);
+        System.out.println(sb.toString());
+        String tableName = "dw_dm.def_re_cntrgrp_i17";
+        String[] split = tableName.split("\\.");
+        System.out.println(split.toString());
+
+        sqler = "CREATE TABLE " + tableName + " (" + sb.toString() + ");";
+
+        System.out.println(sqler);
     }
 }

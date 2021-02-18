@@ -1,0 +1,86 @@
+package com.newcore.ifrs17.fact.reinsurance;
+import  com.newcore.ifrs17.fact.reinsurance.IFRS17DefReCntrgrpI17
+
+rule "IFRS17DefReCntrgrpI17_minCalCode_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(minCalCode==null|| minCalCode.trim().toUpperCase() =="NULL" ||minCalCode not matches ("^[a-zA-z0-9]*$"))
+    then
+        ifrs17DefReCntrgrpI17.setRemark("最小计量单位编码为空或不符合规则 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_contcode_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(contcode==null || contcode.trim() == "" || contcode not matches ("^[a-zA-z0-9]*$"))
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"再保合同编号空或者输入不正确 \n" :ifrs17DefReCntrgrpI17.getRemark()+"再保合同编号为空或者输入不正确 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_inoutflag_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(inoutflag==null || inoutflag.trim() == "" || inoutflag
+    not in ("1","2"))
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"分入分出标识为空或不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"分入分出标识为空或不符合规则 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_isNoticeTermOrAdjustFee_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(isNoticeTermOrAdjustFee==null  || isNoticeTermOrAdjustFee not in ("Y","N"))
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"是否为提前通知终止为空或不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"是否为提前通知终止为空或不符合规则 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_sigRiskTestResult_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(sigRiskTestResult==null || sigRiskTestResult not in ("Y","N"))
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"重测结果为空或不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"重测结果为空或不符合规则 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_sigRiskTestResultExcTime_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(sigRiskTestResultExcTime == null || sigRiskTestResultExcTime.trim() not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$")
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"重测结果配置的系统时间不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"重测结果配置的系统时间不符合规则 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_profitOrLossTestResult_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
+    (profitOrLossTestResult != null && profitOrLossTestResult not in ("A","B","C","D","E","F")) ||
+    (inoutflag == "1" && profitOrLossTestResult in ("A","B","C")) ||
+    (inoutflag == "2" && profitOrLossTestResult in ("D","E","F")) ||
+    (sigRiskTestResult == "Y" && profitOrLossTestResult == null)
+)
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"盈利性结果为空或不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"盈利性结果为空或不符合规则 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_profitOrLossTestResultEfftdate_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
+    ( sigRiskTestResult == "Y" && (profitOrLossTestResultEfftdate == null || profitOrLossTestResultEfftdate not matches "^\\d{4}-\\d{2}-\\d{2}$" ))
+    || (sigRiskTestResult != "Y" && (profitOrLossTestResultEfftdate != null && profitOrLossTestResultEfftdate not matches "^\\d{4}-\\d{2}-\\d{2}$"))
+    )
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"盈利性结果更新时间不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"盈利性结果更新时间不符合规则 \n");
+    end
+
+
+rule "IFRS17DefReCntrgrpI17_profitOrLossTestResultExcTime_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
+    (sigRiskTestResult == "Y" && (profitOrLossTestResultExcTime == null || profitOrLossTestResultExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
+    || (sigRiskTestResult != "Y" && (profitOrLossTestResultExcTime != null && profitOrLossTestResultExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
+    )
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"盈利性结果配置的系统时间不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"盈利性结果配置的系统时间不符合规则 \n");
+    end
+
+rule "IFRS17DefReCntrgrpI17_isApplicability_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
+    (sigRiskTestResult == "Y" && (isApplicability == null || isApplicability not in ("1","2")))
+    || (sigRiskTestResult != "Y" && (isApplicability != null && isApplicability not in ("1","2")))
+    )
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"模型适用性结果不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"模型适用性结果不符合规则 \n");
+    end
+
+rule "IFRS17DefReCntrgrpI17_isApplicabilityExcTime_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
+    ( sigRiskTestResult == "Y" && (isApplicabilityExcTime == null || isApplicabilityExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$" ))
+    || (sigRiskTestResult != "Y" && (isApplicabilityExcTime != null && isApplicabilityExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
+    )
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"模型适用性结果配置的系统时间不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"模型适用性结果配置的系统时间不符合规则 \n");
+    end
+rule "IFRS17DefReCntrgrpI17_riskCover_check"
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(riskCover==null || riskCover.trim() == "")
+    then
+        ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"覆盖风险不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"覆盖风险不符合规则 \n");
+    end
+
