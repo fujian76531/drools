@@ -17,7 +17,7 @@ public class ContractDemo {
 
         IFRS17DefOlCmPaidIfrs4 demo = new IFRS17DefOlCmPaidIfrs4();
 
-        demo.setCommisionType("0");
+//        demo.setCommisionType("N");
 
 
         ks.insert(demo);

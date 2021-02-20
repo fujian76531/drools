@@ -4,4 +4,7 @@
     <kbase name="IFRS17DefOlCmPaidIfrs4" packages="com.newcore.ifrs17.fact.olCommission">
         <ksession name="IFRS17DefOlCmPaidIfrs4"></ksession>
     </kbase>
+    <kbase name="IFRS17DefReCntrgrpI17" packages="com.newcore.ifrs17.fact.reinsurance">
+        <ksession name="IFRS17DefReCntrgrpI17"></ksession>
+    </kbase>
 </kmodule>

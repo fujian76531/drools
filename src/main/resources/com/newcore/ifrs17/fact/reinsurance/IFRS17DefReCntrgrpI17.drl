@@ -34,10 +34,10 @@ rule "IFRS17DefReCntrgrpI17_sigRiskTestResultExcTime_check"
     end
 rule "IFRS17DefReCntrgrpI17_profitOrLossTestResult_check"
     when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
-    (profitOrLossTestResult != null && profitOrLossTestResult not in ("A","B","C","D","E","F")) ||
+    (profitOrLossTestResult != null && profitOrLossTestResult.trim() != "" && profitOrLossTestResult not in ("A","B","C","D","E","F")) ||
     (inoutflag == "1" && profitOrLossTestResult in ("A","B","C")) ||
     (inoutflag == "2" && profitOrLossTestResult in ("D","E","F")) ||
-    (sigRiskTestResult == "Y" && profitOrLossTestResult == null)
+    (sigRiskTestResult == "Y" && (profitOrLossTestResult == null || profitOrLossTestResult.trim() == ""))
 )
     then
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"盈利性结果为空或不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"盈利性结果为空或不符合规则 \n");
@@ -45,7 +45,7 @@ rule "IFRS17DefReCntrgrpI17_profitOrLossTestResult_check"
 rule "IFRS17DefReCntrgrpI17_profitOrLossTestResultEfftdate_check"
     when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
     ( sigRiskTestResult == "Y" && (profitOrLossTestResultEfftdate == null || profitOrLossTestResultEfftdate not matches "^\\d{4}-\\d{2}-\\d{2}$" ))
-    || (sigRiskTestResult != "Y" && (profitOrLossTestResultEfftdate != null && profitOrLossTestResultEfftdate not matches "^\\d{4}-\\d{2}-\\d{2}$"))
+    || (sigRiskTestResult != "Y" && (profitOrLossTestResultEfftdate != null && profitOrLossTestResultEfftdate.trim() != "" && profitOrLossTestResultEfftdate not matches "^\\d{4}-\\d{2}-\\d{2}$"))
     )
     then
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"盈利性结果更新时间不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"盈利性结果更新时间不符合规则 \n");
@@ -55,7 +55,7 @@ rule "IFRS17DefReCntrgrpI17_profitOrLossTestResultEfftdate_check"
 rule "IFRS17DefReCntrgrpI17_profitOrLossTestResultExcTime_check"
     when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
     (sigRiskTestResult == "Y" && (profitOrLossTestResultExcTime == null || profitOrLossTestResultExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
-    || (sigRiskTestResult != "Y" && (profitOrLossTestResultExcTime != null && profitOrLossTestResultExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
+    || (sigRiskTestResult != "Y" && (profitOrLossTestResultExcTime != null && profitOrLossTestResultExcTime.trim() != "" &&profitOrLossTestResultExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
     )
     then
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"盈利性结果配置的系统时间不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"盈利性结果配置的系统时间不符合规则 \n");
@@ -63,8 +63,8 @@ rule "IFRS17DefReCntrgrpI17_profitOrLossTestResultExcTime_check"
 
 rule "IFRS17DefReCntrgrpI17_isApplicability_check"
     when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
-    (sigRiskTestResult == "Y" && (isApplicability == null || isApplicability not in ("1","2")))
-    || (sigRiskTestResult != "Y" && (isApplicability != null && isApplicability not in ("1","2")))
+    (sigRiskTestResult == "Y" && (isApplicability == null || isApplicability.trim() == "" || isApplicability not in ("1","2")))
+    || (sigRiskTestResult != "Y" && (isApplicability != null && isApplicability.trim() != "" && isApplicability not in ("1","2")))
     )
     then
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"模型适用性结果不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"模型适用性结果不符合规则 \n");
@@ -73,7 +73,7 @@ rule "IFRS17DefReCntrgrpI17_isApplicability_check"
 rule "IFRS17DefReCntrgrpI17_isApplicabilityExcTime_check"
     when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
     ( sigRiskTestResult == "Y" && (isApplicabilityExcTime == null || isApplicabilityExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$" ))
-    || (sigRiskTestResult != "Y" && (isApplicabilityExcTime != null && isApplicabilityExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
+    || (sigRiskTestResult != "Y" && (isApplicabilityExcTime != null && isApplicabilityExcTime.trim() != "" && isApplicabilityExcTime not matches "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"))
     )
     then
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"模型适用性结果配置的系统时间不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"模型适用性结果配置的系统时间不符合规则 \n");

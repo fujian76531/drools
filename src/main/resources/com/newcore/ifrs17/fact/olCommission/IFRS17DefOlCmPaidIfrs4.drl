@@ -7,12 +7,12 @@ rule "IFRS17DefOlCmPaidIfrs4_dataType_check"
         ifrs17DefOlCmPaidIfrs4.setRemark("数据类型为空或不符合规则 \n");
     end
 rule "IFRS17DefOlCmPaidIfrs4_commisionType_check"
-    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( commisionType==null || (commisionType != "ALL"&& commisionType not matches "^[0-9]*$"))
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( commisionType==null || commisionType.trim() == ""|| (commisionType != "ALL"&& commisionType not matches "^[0-9]*$"))
     then
         ifrs17DefOlCmPaidIfrs4.setRemark(ifrs17DefOlCmPaidIfrs4.getRemark()==null?"佣金类型不符合规则 \n":ifrs17DefOlCmPaidIfrs4.getRemark()+"佣金类型不符合规则\n");
     end
 rule "IFRS17DefOlCmPaidIfrs4_commisionBatch_check"
-    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( commisionBatch==null ||(commisionBatch != "ALL"&& commisionBatch not matches "^[0-9]*$"))
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( commisionBatch==null || commisionBatch.trim() == ""||(commisionBatch != "ALL"&& commisionBatch not matches "^[0-9]*$"))
     then
         ifrs17DefOlCmPaidIfrs4.setRemark(ifrs17DefOlCmPaidIfrs4.getRemark()==null?"佣金实付批次不符合规则 \n":ifrs17DefOlCmPaidIfrs4.getRemark()+"佣金实付批次不符合规则\n");
     end
@@ -23,7 +23,7 @@ rule "IFRS17DefOlCmPaidIfrs4_accType1_check"
     end
 
 rule "IFRS17DefOlCmPaidIfrs4_sceneName_check"
-    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( sceneName == null || sceneName.trim().toUpperCase() =="NULL")
+    when ifrs17DefOlCmPaidIfrs4:IFRS17DefOlCmPaidIfrs4( sceneName == null || sceneName.trim() == ""|| sceneName.trim().toUpperCase() =="NULL")
     then
         ifrs17DefOlCmPaidIfrs4.setRemark(ifrs17DefOlCmPaidIfrs4.getRemark()==null?"场景名称不符合规则 \n":ifrs17DefOlCmPaidIfrs4.getRemark()+"场景名称不符合规则\n");
     end
