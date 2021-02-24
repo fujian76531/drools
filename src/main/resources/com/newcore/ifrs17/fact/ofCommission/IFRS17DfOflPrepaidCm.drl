@@ -1,0 +1,18 @@
+package com.newcore.ifrs17.fact.IFRS17DfOflPrepaidCm;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DfOflPrepaidCm
+
+rule "IFRS17DfOflPrepaidCm_subjectsId_check"
+    when ifrs17DfOflPrepaidCm:IFRS17DfOflPrepaidCm( subjectsId==null || subjectsId.trim() == ""|| subjectsId not matches "^[0-9]*$")
+    then
+        ifrs17DfOflPrepaidCm.setRemark("科目代码为空或不符合规则 \n");
+    end
+rule "IFRS17DfOflPrepaidCm_subjectsName_check"
+    when ifrs17DfOflPrepaidCm:IFRS17DfOflPrepaidCm( subjectsName==null || subjectsName.trim() == "")
+    then
+        ifrs17DfOflPrepaidCm.setRemark(ifrs17DfOflPrepaidCm.getRemark()==null?"科目名称不符合规则 \n":ifrs17DfOflPrepaidCm.getRemark()+"科目名称不符合规则\n");
+    end
+rule "IFRS17DfOflPrepaidCm_credentialsType_check"
+    when ifrs17DfOflPrepaidCm:IFRS17DfOflPrepaidCm( credentialsType==null || credentialsType.trim() == ""|| credentialsType.trim().toUpperCase() == "NULL"  ||credentialsType not matches "^[a-zA-z]*$")
+    then
+        ifrs17DfOflPrepaidCm.setRemark(ifrs17DfOflPrepaidCm.getRemark()==null?"业务类型不符合规则 \n":ifrs17DfOflPrepaidCm.getRemark()+"业务类型不符合规则\n");
+    end

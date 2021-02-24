@@ -1,0 +1,18 @@
+package com.newcore.ifrs17.fact.IFRS17DefCommissionSubjects;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefCommissionSubjects
+
+rule "IFRS17DefCommissionSubjects_subjectsId_check"
+    when ifrs17DefCommissionSubjects:IFRS17DefCommissionSubjects( subjectsId==null || subjectsId.trim() == ""|| subjectsId not matches "^[0-9]*$")
+    then
+        ifrs17DefCommissionSubjects.setRemark("科目代码为空或不符合规则 \n");
+    end
+rule "IFRS17DefCommissionSubjects_subjectsName_check"
+    when ifrs17DefCommissionSubjects:IFRS17DefCommissionSubjects( subjectsName==null || subjectsName.trim() == "")
+    then
+        ifrs17DefCommissionSubjects.setRemark(ifrs17DefCommissionSubjects.getRemark()==null?"科目名称不符合规则 \n":ifrs17DefCommissionSubjects.getRemark()+"科目名称不符合规则\n");
+    end
+rule "IFRS17DefCommissionSubjects_businessUnit_check"
+    when ifrs17DefCommissionSubjects:IFRS17DefCommissionSubjects( credentialsType==null || credentialsType.trim() == ""|| credentialsType.trim().toUpperCase() == "NULL"  ||credentialsType not matches "^[a-zA-z]*$")
+    then
+        ifrs17DefCommissionSubjects.setRemark(ifrs17DefCommissionSubjects.getRemark()==null?"业务类型不符合规则 \n":ifrs17DefCommissionSubjects.getRemark()+"业务类型不符合规则\n");
+    end

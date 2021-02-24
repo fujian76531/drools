@@ -1,0 +1,19 @@
+package com.newcore.ifrs17.fact.IFRS17DefFirstYearFlag;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefFirstYearFlag
+
+rule "IIFRS17DefFirstYearFlag_assesmentMethod_check"
+    when ifrs17DefFirstYearFlag:IFRS17DefFirstYearFlag( assesmentMethod==null || assesmentMethod.trim() == ""|| assesmentMethod.trim().toUpperCase() == "NULL"  ||assesmentMethod not matches "^[a-zA-z]*$")
+    then
+        ifrs17DefFirstYearFlag.setRemark("评估方法空或不符合规则 \n");
+    end
+rule "IFRS17DefFirstYearFlag_firstYearFlag_check"
+    when ifrs17DefFirstYearFlag:IFRS17DefFirstYearFlag( firstYearFlag==null || firstYearFlag.trim() == ""|| firstYearFlag.trim().toUpperCase() == "NULL")
+    then
+        ifrs17DefFirstYearFlag.setRemark(ifrs17DefFirstYearFlag.getRemark()==null?"首续年标识不符合规则 " +
+         "\n":ifrs17DefFirstYearFlag.getRemark()+"首续年标识不符合规则\n");
+    end
+rule "IFRS17DefFirstYearFlag_feeType_check"
+    when ifrs17DefFirstYearFlag:IFRS17DefFirstYearFlag( feeType==null || feeType.trim() == ""|| feeType not matches "^[0-9]*$")
+    then
+        ifrs17DefFirstYearFlag.setRemark(ifrs17DefFirstYearFlag.getRemark()==null?"费用类型不符合规则 \n":ifrs17DefFirstYearFlag.getRemark()+"费用类型不符合规则\n");
+    end
