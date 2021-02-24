@@ -11,11 +11,11 @@ rule "IFRS17DefOlCmBustype_businessCode_check"
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"业务类型代码不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"业务类型代码不符合规则\n");
     end
-rule "IFRS17DefOlCmBustype_businessTypeInstruct_check"
-    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( businessTypeInstruct !=null && businessTypeInstruct.trim() =="")
+/*rule "IFRS17DefOlCmBustype_businessTypeInstruct_check"
+    when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( businessTypeInstruct !=null && businessTypeInstruct.trim() =="" && businessTypeInstruct.trim().toUpperCase() =="NULL")
     then
         ifrs17DefOlCmBustype.setRemark(ifrs17DefOlCmBustype.getRemark()==null?"业务类型说明不符合规则 \n":ifrs17DefOlCmBustype.getRemark()+"业务类型说明不符合规则\n");
-    end
+    end*/
 rule "IFRS17DefOlCmBustype_insuranceYear_check"
     when ifrs17DefOlCmBustype:IFRS17DefOlCmBustype( insuranceYear==null || insuranceYear.trim() == ""|| insuranceYear.trim().toUpperCase() =="NULL")
     then

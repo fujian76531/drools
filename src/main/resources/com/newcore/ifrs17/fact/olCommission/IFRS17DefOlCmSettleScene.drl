@@ -2,7 +2,7 @@ package com.newcore.ifrs17.fact.olCommission;
 import  com.newcore.ifrs17.fact.olCommission.IFRS17DefOlCmSettleScene;
 
 rule "IFRS17DefOlCmSettleScene_commisionType_check"
-    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( commisionType==null || commisionType.trim() == ""|| commisionType not matches "^[0-9]{1,10}$")
+    when ifrs17DefOlCmSettleScene:IFRS17DefOlCmSettleScene( commisionType==null || commisionType.trim() == ""|| (commisionType.trim().toUpperCase() !="ALL" && commisionType not matches "^[0-9]{1,10}$"))
     then
         ifrs17DefOlCmSettleScene.setRemark("佣金类型为空或不符合规则 \n");
     end
