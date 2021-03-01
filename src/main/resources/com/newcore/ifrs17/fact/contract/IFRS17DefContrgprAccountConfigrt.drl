@@ -1,0 +1,19 @@
+package com.newcore.ifrs17.fact.contract;
+import  com.newcore.ifrs17.fact.contract.IFRS17DefContrgprAccountConfigrt;
+
+rule "IFRS17DefContrgprAccountConfigrt_polCode_check"
+    when ifrs17DefContrgprAccountConfigrt:IFRS17DefContrgprAccountConfigrt( polCode==null || polCode.trim() == "" ||polCode.trim().toUpperCase() == "NULL" ||polCode not matches("^[A-Za-z0-9]*$"))
+    then
+        ifrs17DefContrgprAccountConfigrt.setRemark("险种代码为空或不符合规则 \n");
+    end
+
+rule "IFRS17DefContrgprAccountConfigrt_isSpecialCmbAccount_check"
+    when ifrs17DefContrgprAccountConfigrt:IFRS17DefContrgprAccountConfigrt(isSpecialCmbAccount==null || isSpecialCmbAccount.trim() == "" || isSpecialCmbAccount not in("N","Y"))
+    then
+        ifrs17DefContrgprAccountConfigrt.setRemark(ifrs17DefContrgprAccountConfigrt.getRemark()==null?"是否为招行专户不符合规则 \n":ifrs17DefContrgprAccountConfigrt.getRemark()+"是否为招行专户不符合规则 \n");
+    end
+rule "IFRS17DefContrgprAccountConfigrt_universalAccountNum_check"
+    when ifrs17DefContrgprAccountConfigrt:IFRS17DefContrgprAccountConfigrt(universalAccountNum==null || universalAccountNum.trim() == "" ||universalAccountNum.trim().toUpperCase() == "NULL" ||universalAccountNum matches("^[A-Za-z]*$"))
+    then
+        ifrs17DefContrgprAccountConfigrt.setRemark(ifrs17DefContrgprAccountConfigrt.getRemark()==null?"账户编号不符合规则 \n":ifrs17DefContrgprAccountConfigrt.getRemark()+"账户编号不符合规则 \n");
+    end
