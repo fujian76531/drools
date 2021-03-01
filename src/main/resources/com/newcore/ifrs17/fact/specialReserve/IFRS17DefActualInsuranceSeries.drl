@@ -1,0 +1,28 @@
+package com.newcore.ifrs17.fact.specialReserve;
+import  com.newcore.ifrs17.fact.specialReserve.IFRS17DefActualInsuranceSeries;
+
+rule "IFRS17DefActualInsuranceSeries_polCode_check"
+    when ifrs17DefActualInsuranceSeries:IFRS17DefActualInsuranceSeries(polCode==null || polCode.trim() == ""||polCode.trim().toUpperCase()=="NULL" || polCode not matches("^[A-Za-z0-9]*$"))
+    then
+        ifrs17DefActualInsuranceSeries.setRemark(ifrs17DefActualInsuranceSeries.getRemark()==null?"精算代码不符合规则 \n" :ifrs17DefActualInsuranceSeries.getRemark()+"精算代码不符合规则 \n");
+    end
+rule "IFRS17DefActualInsuranceSeries_granularity_check"
+    when ifrs17DefActualInsuranceSeries:IFRS17DefActualInsuranceSeries(granularity==null || granularity.trim() == "" ||granularity not matches("^[0-9]*$"))
+    then
+        ifrs17DefActualInsuranceSeries.setRemark(ifrs17DefActualInsuranceSeries.getRemark()==null?"颗粒度不符合规则 \n":ifrs17DefActualInsuranceSeries.getRemark()+"颗粒度不符合规则 \n");
+    end
+rule "IFRS17DefActualInsuranceSeries_dataProject_check"
+    when ifrs17DefActualInsuranceSeries:IFRS17DefActualInsuranceSeries(dataProject==null || dataProject.trim() == "" ||dataProject not matches("^[0-9]*$"))
+    then
+        ifrs17DefActualInsuranceSeries.setRemark(ifrs17DefActualInsuranceSeries.getRemark()==null?"数据项目不符合规则 \n":ifrs17DefActualInsuranceSeries.getRemark()+"数据项目不符合规则 \n");
+    end
+rule "IFRS17DefActualInsuranceSeries_itemValue_check"
+    when ifrs17DefActualInsuranceSeries:IFRS17DefActualInsuranceSeries(itemValue==null || itemValue.trim() == "" ||itemValue not matches("^[0-9]*$"))
+    then
+        ifrs17DefActualInsuranceSeries.setRemark(ifrs17DefActualInsuranceSeries.getRemark()==null?"数据项目值不符合规则 \n":ifrs17DefActualInsuranceSeries.getRemark()+"数据项目值不符合规则 \n");
+    end
+rule "IFRS17DefActualInsuranceSeries_accessDate_check"
+    when ifrs17DefActualInsuranceSeries:IFRS17DefActualInsuranceSeries(accessDate==null || accessDate.trim() == "" ||accessDate not matches "^\\d{4}-\\d{2}$")
+    then
+        ifrs17DefActualInsuranceSeries.setRemark(ifrs17DefActualInsuranceSeries.getRemark()==null?"评估日期不符合规则 \n":ifrs17DefActualInsuranceSeries.getRemark()+"评估日期不符合规则 \n");
+    end

@@ -1,0 +1,13 @@
+package com.newcore.ifrs17.fact.specialReserve;
+import  com.newcore.ifrs17.fact.specialReserve.IFRS17DefDividendAnnuity;
+
+rule "IFRS17DefDividendAnnuity_polCode_check"
+    when ifrs17DefDividendAnnuity:IFRS17DefDividendAnnuity(polCode==null || polCode.trim() == ""||polCode.trim().toUpperCase()=="NULL" || polCode not matches("^[A-Za-z0-9]*$"))
+    then
+        ifrs17DefDividendAnnuity.setRemark(ifrs17DefDividendAnnuity.getRemark()==null?"精算代码不符合规则 \n" :ifrs17DefDividendAnnuity.getRemark()+"精算代码不符合规则 \n");
+    end
+rule "IFRS17DefDividendAnnuity_name_check"
+    when ifrs17DefDividendAnnuity:IFRS17DefDividendAnnuity(name==null || name.trim() == "" || name.trim().toUpperCase()=="NULL")
+    then
+        ifrs17DefDividendAnnuity.setRemark(ifrs17DefDividendAnnuity.getRemark()==null?"名称不符合规则 \n":ifrs17DefDividendAnnuity.getRemark()+"名称不符合规则 \n");
+    end

@@ -1,0 +1,18 @@
+package com.newcore.ifrs17.fact.specialReserve;
+import  com.newcore.ifrs17.fact.specialReserve.IFRS17DefUniversalInsurance;
+
+rule "IFRS17DefUniversalInsurance_accountType_check"
+    when ifrs17DefUniversalInsurance:IFRS17DefUniversalInsurance( contractGroupCode==null|| contractGroupCode.trim() == "" ||contractGroupCode.trim().toUpperCase()=="NULL" || contractGroupCode not matches("^[A-Za-z0-9]*$"))
+    then
+        ifrs17DefUniversalInsurance.setRemark("合同组编码不符合规则 \n");
+    end
+rule "IFRS17DefUniversalInsurance_equityProp_check"
+    when ifrs17DefUniversalInsurance:IFRS17DefUniversalInsurance(equityProp==null || equityProp.trim() == "" || equityProp not matches("^[0-9]*$"))
+    then
+        ifrs17DefUniversalInsurance.setRemark(ifrs17DefUniversalInsurance.getRemark()==null?"股东权益占比不符合规则 \n" :ifrs17DefUniversalInsurance.getRemark()+"股东权益占比不符合规则 \n");
+    end
+rule "IFRS17DefUniversalInsurance_effectiveDate_check"
+    when ifrs17DefUniversalInsurance:IFRS17DefUniversalInsurance(effectiveDate==null || effectiveDate.trim() == "" ||effectiveDate not matches "^\\d{4}-\\d{2}-\\d{2}$")
+    then
+        ifrs17DefUniversalInsurance.setRemark(ifrs17DefUniversalInsurance.getRemark()==null?"生效日期不符合规则 \n":ifrs17DefUniversalInsurance.getRemark()+"生效日期不符合规则 \n");
+    end

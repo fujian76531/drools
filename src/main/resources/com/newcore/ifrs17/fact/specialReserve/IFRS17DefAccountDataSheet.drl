@@ -1,0 +1,38 @@
+package com.newcore.ifrs17.fact.specialReserve;
+import  com.newcore.ifrs17.fact.specialReserve.IFRS17DefAccountDataSheet;
+
+rule "IFRS17DefAccountDataSheet_accountType_check"
+    when ifrs17DefAccountDataSheet:IFRS17DefAccountDataSheet( accountType==null|| accountType.trim() == "" ||accountType not matches("^[0-9]*$"))
+    then
+        ifrs17DefAccountDataSheet.setRemark("账户类型不符合规则 \n");
+    end
+rule "IFRS17DefAccountDataSheet_accountFlag_check"
+    when ifrs17DefAccountDataSheet:IFRS17DefAccountDataSheet(accountFlag==null || accountFlag.trim() == ""||accountFlag.trim().toUpperCase()=="NULL" || accountFlag not matches("^[A-Za-z0-9]*$"))
+    then
+        ifrs17DefAccountDataSheet.setRemark(ifrs17DefAccountDataSheet.getRemark()==null?"账户标识不符合规则 \n" :ifrs17DefAccountDataSheet.getRemark()+"账户标识不符合规则 \n");
+    end
+rule "IFRS17DefAccountDataSheet_granularity_check"
+    when ifrs17DefAccountDataSheet:IFRS17DefAccountDataSheet(granularity==null || granularity.trim() == "" ||granularity not matches("^[0-9]*$"))
+    then
+        ifrs17DefAccountDataSheet.setRemark(ifrs17DefAccountDataSheet.getRemark()==null?"颗粒度不符合规则 \n":ifrs17DefAccountDataSheet.getRemark()+"颗粒度不符合规则 \n");
+    end
+rule "IFRS17DefAccountDataSheet_groupFlag_check"
+    when ifrs17DefAccountDataSheet:IFRS17DefAccountDataSheet(groupFlag==null || groupFlag.trim() == "" ||groupFlag not matches("^[0-9]*$"))
+    then
+        ifrs17DefAccountDataSheet.setRemark(ifrs17DefAccountDataSheet.getRemark()==null?"个团标识不符合规则 \n":ifrs17DefAccountDataSheet.getRemark()+"个团标识不符合规则 \n");
+    end
+rule "IFRS17DefAccountDataSheet_dataProject_check"
+    when ifrs17DefAccountDataSheet:IFRS17DefAccountDataSheet(dataProject==null || dataProject.trim() == "" ||dataProject not matches("^[0-9]*$"))
+    then
+        ifrs17DefAccountDataSheet.setRemark(ifrs17DefAccountDataSheet.getRemark()==null?"数据项目不符合规则 \n":ifrs17DefAccountDataSheet.getRemark()+"数据项目不符合规则 \n");
+    end
+rule "IFRS17DefAccountDataSheet_itemValue_check"
+    when ifrs17DefAccountDataSheet:IFRS17DefAccountDataSheet(itemValue==null || itemValue.trim() == "" ||itemValue not matches("^[0-9]*$"))
+    then
+        ifrs17DefAccountDataSheet.setRemark(ifrs17DefAccountDataSheet.getRemark()==null?"数据项目值不符合规则 \n":ifrs17DefAccountDataSheet.getRemark()+"数据项目值不符合规则 \n");
+    end
+rule "IFRS17DefAccountDataSheet_accessDate_check"
+    when ifrs17DefAccountDataSheet:IFRS17DefAccountDataSheet(accessDate==null || accessDate.trim() == "" ||accessDate not matches "^\\d{4}-\\d{2}$")
+    then
+        ifrs17DefAccountDataSheet.setRemark(ifrs17DefAccountDataSheet.getRemark()==null?"评估日期不符合规则 \n":ifrs17DefAccountDataSheet.getRemark()+"评估日期不符合规则 \n");
+    end

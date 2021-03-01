@@ -1,0 +1,23 @@
+package com.newcore.ifrs17.fact.specialReserve;
+import  com.newcore.ifrs17.fact.specialReserve.IFRS17DefLongInsuranceIBNRData;
+
+rule "IFRS17DefLongInsuranceIBNRData_granularity_check"
+    when ifrs17DefLongInsuranceIBNRData:IFRS17DefLongInsuranceIBNRData( granularity==null|| granularity.trim() == "" ||granularity not matches("^[0-9]*$"))
+    then
+        ifrs17DefLongInsuranceIBNRData.setRemark("颗粒度不符合规则 \n");
+    end
+rule "IFRS17DefLongInsuranceIBNRData_liClassification_check"
+    when ifrs17DefLongInsuranceIBNRData:IFRS17DefLongInsuranceIBNRData(liClassification==null || liClassification.trim() == "" ||liClassification not matches("^[0-9]*$"))
+    then
+        ifrs17DefLongInsuranceIBNRData.setRemark(ifrs17DefLongInsuranceIBNRData.getRemark()==null?"理赔责任分类不符合规则 \n" :ifrs17DefLongInsuranceIBNRData.getRemark()+"理赔责任分类不符合规则 \n");
+    end
+rule "IFRS17DefLongInsuranceIBNRData_IBNRFee_check"
+    when ifrs17DefLongInsuranceIBNRData:IFRS17DefLongInsuranceIBNRData(IBNRFee==null || IBNRFee.trim() == "" ||IBNRFee not matches("^[0-9]*$"))
+    then
+        ifrs17DefLongInsuranceIBNRData.setRemark(ifrs17DefLongInsuranceIBNRData.getRemark()==null?"IBNR金额不符合规则 \n":ifrs17DefLongInsuranceIBNRData.getRemark()+"IBNR金额不符合规则 \n");
+    end
+rule "IFRS17DefLongInsuranceIBNRData_accessDate_check"
+    when ifrs17DefLongInsuranceIBNRData:IFRS17DefLongInsuranceIBNRData(accessDate==null || accessDate.trim() == "" || accessDate not matches "^\\d{4}-\\d{2}$")
+    then
+        ifrs17DefLongInsuranceIBNRData.setRemark(ifrs17DefLongInsuranceIBNRData.getRemark()==null?"评估日期不符合规则 \n":ifrs17DefLongInsuranceIBNRData.getRemark()+"评估日期不符合规则 \n");
+    end

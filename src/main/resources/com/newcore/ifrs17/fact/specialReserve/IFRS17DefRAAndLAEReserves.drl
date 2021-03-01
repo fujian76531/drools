@@ -1,0 +1,23 @@
+package com.newcore.ifrs17.fact.specialReserve;
+import  com.newcore.ifrs17.fact.specialReserve.IFRS17DefRAAndLAEReserves;
+
+rule "IFRS17DefRAAndLAEReserves_granularity_check"
+    when ifrs17DefRAAndLAEReserves:IFRS17DefRAAndLAEReserves( granularity==null|| granularity.trim() == "" ||granularity not matches("^[0-9]*$"))
+    then
+        ifrs17DefRAAndLAEReserves.setRemark("颗粒度不符合规则 \n");
+    end
+rule "IFRS17DefRAAndLAEReserves_numItem_check"
+    when ifrs17DefRAAndLAEReserves:IFRS17DefRAAndLAEReserves(numItem==null || numItem.trim() == "" ||numItem not matches("^[0-9]*$"))
+    then
+        ifrs17DefRAAndLAEReserves.setRemark(ifrs17DefRAAndLAEReserves.getRemark()==null?"数字项目不符合规则 \n":ifrs17DefRAAndLAEReserves.getRemark()+"数字项目不符合规则 \n");
+    end
+rule "IFRS17DefRAAndLAEReserves_numItemValue_check"
+    when ifrs17DefRAAndLAEReserves:IFRS17DefRAAndLAEReserves(numItemValue==null || numItemValue.trim() == "" ||numItemValue not matches("^[0-9]*$"))
+    then
+        ifrs17DefRAAndLAEReserves.setRemark(ifrs17DefRAAndLAEReserves.getRemark()==null?"数字项目值不符合规则 \n":ifrs17DefRAAndLAEReserves.getRemark()+"数字项目值不符合规则 \n");
+    end
+rule "IFRS17DefRAAndLAEReserves_effectiveDate_check"
+    when ifrs17DefRAAndLAEReserves:IFRS17DefRAAndLAEReserves(effectiveDate==null || effectiveDate.trim() == "" ||effectiveDate not matches "^\\d{4}-\\d{2}-\\d{2}$")
+    then
+        ifrs17DefRAAndLAEReserves.setRemark(ifrs17DefRAAndLAEReserves.getRemark()==null?"生效日期不符合规则 \n":ifrs17DefRAAndLAEReserves.getRemark()+"生效日期不符合规则 \n");
+    end
