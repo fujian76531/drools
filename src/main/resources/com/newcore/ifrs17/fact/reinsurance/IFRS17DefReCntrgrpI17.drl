@@ -12,8 +12,7 @@ rule "IFRS17DefReCntrgrpI17_contcode_check"
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"再保合同编号空或者输入不正确 \n" :ifrs17DefReCntrgrpI17.getRemark()+"再保合同编号为空或者输入不正确 \n");
     end
 rule "IFRS17DefReCntrgrpI17_inoutflag_check"
-    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(inoutflag==null || inoutflag.trim() == "" || inoutflag
-    not in ("1","2"))
+    when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(inoutflag==null || inoutflag not in (1,2))
     then
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"分入分出标识为空或不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"分入分出标识为空或不符合规则 \n");
     end
@@ -35,8 +34,8 @@ rule "IFRS17DefReCntrgrpI17_sigRiskTestResultExcTime_check"
 rule "IFRS17DefReCntrgrpI17_profitOrLossTestResult_check"
     when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
     (profitOrLossTestResult != null && profitOrLossTestResult.trim() != "" && profitOrLossTestResult not in ("A","B","C","D","E","F")) ||
-    (inoutflag == "1" && profitOrLossTestResult in ("A","B","C")) ||
-    (inoutflag == "2" && profitOrLossTestResult in ("D","E","F")) ||
+    (inoutflag == 1 && profitOrLossTestResult in ("A","B","C")) ||
+    (inoutflag == 2 && profitOrLossTestResult in ("D","E","F")) ||
     (sigRiskTestResult == "Y" && (profitOrLossTestResult == null || profitOrLossTestResult.trim() == ""))
 )
     then
@@ -63,8 +62,8 @@ rule "IFRS17DefReCntrgrpI17_profitOrLossTestResultExcTime_check"
 
 rule "IFRS17DefReCntrgrpI17_isApplicability_check"
     when ifrs17DefReCntrgrpI17:IFRS17DefReCntrgrpI17(
-    (sigRiskTestResult == "Y" && (isApplicability == null || isApplicability.trim() == "" || isApplicability not in ("1","2")))
-    || (sigRiskTestResult != "Y" && (isApplicability != null && isApplicability.trim() != "" && isApplicability not in ("1","2")))
+    (sigRiskTestResult == "Y" && (isApplicability == null || isApplicability not in (1,2)))
+    || (sigRiskTestResult != "Y" && (isApplicability != null  && isApplicability not in (1,2)))
     )
     then
         ifrs17DefReCntrgrpI17.setRemark(ifrs17DefReCntrgrpI17.getRemark()==null?"模型适用性结果不符合规则 \n":ifrs17DefReCntrgrpI17.getRemark()+"模型适用性结果不符合规则 \n");

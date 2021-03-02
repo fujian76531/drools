@@ -13,11 +13,12 @@ public class ContractDemo {
     public static void main(String[] args){
         KieServices kss = KieServices.Factory.get();
         KieContainer kc = kss.getKieClasspathContainer();
-        KieSession ks = kc.newKieSession("IFRS17DefOlCmPaidIfrs4");
+        KieSession ks = kc.newKieSession("IFRS17DefReCntrgrpI17");
 
-        IFRS17DefOlCmPaidIfrs4 demo = new IFRS17DefOlCmPaidIfrs4();
+        IFRS17DefReCntrgrpI17 demo = new IFRS17DefReCntrgrpI17();
 
-//        demo.setCommisionType("N");
+        demo.setInoutflag(1);
+        demo.setProfitOrLossTestResult("D");
 
 
         ks.insert(demo);

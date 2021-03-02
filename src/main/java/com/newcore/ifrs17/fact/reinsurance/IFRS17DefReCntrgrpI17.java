@@ -23,7 +23,7 @@ public class IFRS17DefReCntrgrpI17 {
     /**
      * 分入分出标识
      */
-    private String inoutflag;
+    private Integer inoutflag;
 
     /**
      * 是否为提前通知终止
@@ -58,7 +58,7 @@ public class IFRS17DefReCntrgrpI17 {
     /**
      * 模型适用性结果
      */
-    private String isApplicability;
+    private Integer isApplicability;
 
     /**
      * 模型适用性结果配置的系统时间
