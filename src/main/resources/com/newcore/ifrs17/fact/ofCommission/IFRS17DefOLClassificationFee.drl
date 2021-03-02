@@ -1,0 +1,24 @@
+package com.newcore.ifrs17.fact.IFRS17DefOLClassificationFee;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOLClassificationFee
+
+rule "IFRS17DefOLClassificationFee_expenseType_check"
+    when ifrs17DefOLClassificationFee:IFRS17DefOLClassificationFee( expenseType==null || expenseType.trim() == ""|| expenseType not matches "^[0-9]*$")
+    then
+        ifrs17DefOLClassificationFee.setRemark("费用类型为空或不符合规则 \n");
+    end
+rule "IFRS17DefOLFirstRenewalYear_accountCode_check"
+    when ifrs17DefOLClassificationFee:IFRS17DefOLClassificationFee( accountCode==null || accountCode.trim() == "" ||accountCode not matches "^[0-9]*$")
+    then
+        ifrs17DefOLClassificationFee.setRemark(ifrs17DefOLClassificationFee.getRemark()==null?"科目代码不符合规则 \n":ifrs17DefOLClassificationFee.getRemark()+"科目代码不符合规则\n");
+    end
+rule "IFRS17DefOLFirstRenewalYear_accType1_check"
+    when ifrs17DefOLClassificationFee:IFRS17DefOLClassificationFee( accType1==null || accType1.trim() == ""|| accType1
+    not matches "^[0-9]*$")
+    then
+        ifrs17DefOLClassificationFee.setRemark(ifrs17DefOLClassificationFee.getRemark()==null?"场景编码不符合规则 \n":ifrs17DefOLClassificationFee.getRemark()+"场景编码不符合规则\n");
+    end
+rule "IFRS17DefOLFirstRenewalYear_sceneDescription_check"
+    when ifrs17DefOLClassificationFee:IFRS17DefOLClassificationFee( sceneDescription==null || sceneDescription.trim() == "")
+    then
+        ifrs17DefOLClassificationFee.setRemark(ifrs17DefOLClassificationFee.getRemark()==null?"场景描述不符合规则 \n":ifrs17DefOLClassificationFee.getRemark()+"场景描述不符合规则\n");
+    end

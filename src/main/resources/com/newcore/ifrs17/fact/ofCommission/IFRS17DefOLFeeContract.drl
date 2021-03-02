@@ -1,0 +1,23 @@
+package com.newcore.ifrs17.fact.IFRS17DefOLFeeContract;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOLFeeContract
+
+rule "IFRS17DefOLFeeContract_expenseType_check"
+    when ifrs17DefOLFeeContract:IFRS17DefOLFeeContract( expenseType==null || expenseType.trim() == ""|| expenseType not matches "^[0-9]*$")
+    then
+        ifrs17DefOLFeeContract.setRemark("费用类型为空或不符合规则 \n");
+    end
+rule "IFRS17DefOLFeeContract_accountCode_check"
+    when ifrs17DefOLFeeContract:IFRS17DefOLFeeContract( accountCode==null || accountCode.trim() == "" ||accountCode not matches "^[0-9]*$")
+    then
+        ifrs17DefOLFeeContract.setRemark(ifrs17DefOLFeeContract.getRemark()==null?"科目代码不符合规则 \n":ifrs17DefOLFeeContract.getRemark()+"科目代码不符合规则\n");
+    end
+rule "IFRS17DefOLFeeContract_accType1_check"
+    when ifrs17DefOLFeeContract:IFRS17DefOLFeeContract( accType1==null || accType1.trim() == ""|| accType1 not matches "^[0-9]*$")
+    then
+        ifrs17DefOLFeeContract.setRemark(ifrs17DefOLFeeContract.getRemark()==null?"场景编码不符合规则 \n":ifrs17DefOLFeeContract.getRemark()+"场景编码不符合规则\n");
+    end
+rule "IFRS17DefOLFeeContract_sceneName_check"
+    when ifrs17DefOLFeeContract:IFRS17DefOLFeeContract( sceneName==null || sceneName.trim() == "")
+    then
+        ifrs17DefOLFeeContract.setRemark(ifrs17DefOLFeeContract.getRemark()==null?"场景名称不符合规则 \n":ifrs17DefOLFeeContract.getRemark()+"场景名称不符合规则\n");
+    end

@@ -1,0 +1,23 @@
+package com.newcore.ifrs17.fact.IFRS17DefOLCommissionExpensesFee;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOLCommissionExpensesFee
+
+rule "IFRS17DefOLCommissionExpensesFee_accountCode_check"
+    when ifrs17DefOLCommissionExpensesFee:IFRS17DefOLCommissionExpensesFee( accountCode==null || accountCode.trim() == ""|| accountCode not matches "^[0-9]*$")
+    then
+        ifrs17DefOLCommissionExpensesFee.setRemark("科目代码为空或不符合规则 \n");
+    end
+rule "IFRS17DefOLCommissionExpensesFee_accountName_check"
+    when ifrs17DefOLCommissionExpensesFee:IFRS17DefOLCommissionExpensesFee( accountName==null || accountName.trim() == "")
+    then
+        ifrs17DefOLCommissionExpensesFee.setRemark(ifrs17DefOLCommissionExpensesFee.getRemark()==null?"应付科目名称不符合规则 \n":ifrs17DefOLCommissionExpensesFee.getRemark()+"应付科目名称不符合规则\n");
+    end
+rule "IFRS17DefOLCommissionExpensesFee_correspondingAccount_check"
+    when ifrs17DefOLCommissionExpensesFee:IFRS17DefOLCommissionExpensesFee( correspondingAccount==null || correspondingAccount.trim() == ""|| correspondingAccount not matches "^[0-9]*$")
+    then
+        ifrs17DefOLCommissionExpensesFee.setRemark(ifrs17DefOLCommissionExpensesFee.getRemark()==null?"对应科目不符合规则 \n":ifrs17DefOLCommissionExpensesFee.getRemark()+"对应科目不符合规则\n");
+    end
+rule "IFRS17DefOLCommissionExpensesFee_expenseAccountName_check"
+    when ifrs17DefOLCommissionExpensesFee:IFRS17DefOLCommissionExpensesFee( expenseAccountName==null || expenseAccountName.trim() == "")
+    then
+        ifrs17DefOLCommissionExpensesFee.setRemark(ifrs17DefOLCommissionExpensesFee.getRemark()==null?"费用科目名称不符合规则 \n":ifrs17DefOLCommissionExpensesFee.getRemark()+"费用科目名称不符合规则\n");
+    end

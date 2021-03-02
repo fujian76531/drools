@@ -1,0 +1,28 @@
+package com.newcore.ifrs17.fact.IFRS17DefOLPaymentSystem;
+import  com.newcore.ifrs17.fact.ofCommission.IFRS17DefOLPaymentSystem
+
+rule "IFRS17DefOLPaymentSystem_expenseType_check"
+    when ifrs17DefOLPaymentSystem:IFRS17DefOLPaymentSystem( expenseType==null || expenseType.trim() == ""|| expenseType not matches "^[0-9]*$")
+    then
+        ifrs17DefOLPaymentSystem.setRemark("费用类型为空或不符合规则 \n");
+    end
+rule "IFRS17DefOLFeeContract_orrespondingAccount_check"
+    when ifrs17DefOLPaymentSystem:IFRS17DefOLPaymentSystem( orrespondingAccount==null || orrespondingAccount.trim() == "" ||orrespondingAccount not matches "^[0-9]*$")
+    then
+        ifrs17DefOLPaymentSystem.setRemark(ifrs17DefOLPaymentSystem.getRemark()==null?"对应科目不符合规则 \n":ifrs17DefOLPaymentSystem.getRemark()+"对应科目不符合规则\n");
+    end
+rule "IFRS17DefOLFeeContract_accountName_check"
+    when ifrs17DefOLPaymentSystem:IFRS17DefOLPaymentSystem( accountName==null || accountName.trim() == "")
+    then
+        ifrs17DefOLPaymentSystem.setRemark(ifrs17DefOLPaymentSystem.getRemark()==null?"对应科目名称不符合规则 \n":ifrs17DefOLPaymentSystem.getRemark()+"对应科目名称不符合规则\n");
+    end
+rule "IFRS17DefOLFeeContract_accType1_check"
+    when ifrs17DefOLPaymentSystem:IFRS17DefOLPaymentSystem( accType1==null || accType1.trim() == ""|| accType1 not matches "^[0-9]*$")
+    then
+        ifrs17DefOLPaymentSystem.setRemark(ifrs17DefOLPaymentSystem.getRemark()==null?"场景编码不符合规则 \n":ifrs17DefOLPaymentSystem.getRemark()+"场景编码不符合规则\n");
+    end
+rule "IFRS17DefOLFeeContract_sceneDescription_check"
+    when ifrs17DefOLPaymentSystem:IFRS17DefOLPaymentSystem( sceneDescription==null || sceneDescription.trim() == "")
+    then
+        ifrs17DefOLPaymentSystem.setRemark(ifrs17DefOLPaymentSystem.getRemark()==null?"场景描述不符合规则 \n":ifrs17DefOLPaymentSystem.getRemark()+"场景描述不符合规则\n");
+    end
