@@ -7,4 +7,7 @@
     <kbase name="IFRS17DefReCntrgrpI17" packages="com.newcore.ifrs17.fact.reinsurance">
         <ksession name="IFRS17DefReCntrgrpI17"></ksession>
     </kbase>
+    <kbase name="DwdI17InsurancePolicyDayOfl" packages="com.newcore.ifrs17.fact.consistency">
+        <ksession name="DwdI17InsurancePolicyDayOfl"></ksession>
+    </kbase>
 </kmodule>

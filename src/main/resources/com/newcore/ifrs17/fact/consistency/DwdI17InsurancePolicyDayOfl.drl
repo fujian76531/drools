@@ -62,7 +62,7 @@ rule "dwdI17InsurancePolicyDayOfl_insEndDateCntrStat_T_check"
 end
 rule "dwdI17InsurancePolicyDayOfl_insEndDateCntrStat_L_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(cntrStat=="L"&&insEndDate!=null && dateToString(insEndDate,"yyyy-MM-dd")!="1900-01-01")
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1021" &&cntrStat=="L"&&insEndDate!=null && dateToString(insEndDate,"yyyy-MM-dd")!="1900-01-01")
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1021失效状态不应有终止日期 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1021失效状态不应有终止日期 \n");
 end
@@ -74,19 +74,19 @@ rule "dwdI17InsurancePolicyDayOfl_insureSex_check"
 end
 rule "dwdI17InsurancePolicyDayOfl_faceAmntZero_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(faceAmnt<0)
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1024" && faceAmnt<0)
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1024保单保额不应小于0 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1024保单保额不应小于0 \n");
 end
 rule "dwdI17InsurancePolicyDayOfl_DwdI17PrdInsurTypeDayOfl_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(moneyinItrvl=="N" && isSupYearMoneyin=="N" &&isSupHalfYearMoneyin=="N" && isSupQuarterMoneyin=="N" && isSupMonthlyMoneyin=="N" && isSupSingleMoneyin=="N" && isSup3YearsMoneyin=="N")
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1030" &&isSupYearMoneyin=="N" &&isSupHalfYearMoneyin=="N" && isSupQuarterMoneyin=="N" && isSupMonthlyMoneyin=="N" && isSupSingleMoneyin=="N" && isSup3YearsMoneyin=="N")
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1030缴费频率不正确 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1030缴费频率不正确 \n");
 end
 rule "dwdI17InsurancePolicyDayOfl_moneyinDur_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(moneyinDur != null && moneyinDur<1 )
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1031" &&moneyinDur != null && moneyinDur<1 )
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1031缴费期错 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1031缴费期错 \n");
 end
@@ -110,7 +110,7 @@ rule "dwdI17InsurancePolicyDayOfl_aveFundBalance_check"
 end
 rule "dwdI17InsurancePolicyDayOfl_stdPremiumSignDate_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl((stdPremium==null || stdPremium<=0 ) && (signDate !=null && checkDateObject(new Date(),signDate,0)))
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1047" &&((stdPremium==null || stdPremium<=0 ) && (signDate !=null && checkDateObject(new Date(),signDate,0))))
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1047新单基本保费应该大于0，且不能为空 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1047新单基本保费应该大于0，且不能为空 \n");
 end
@@ -122,14 +122,14 @@ rule "dwdI17InsurancePolicyDayOfl_endLValue_check"
 end
 rule "dwdI17InsurancePolicyDayOfl_faceAmnt_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(dwdI17InsurancePolicyDayOfl.faceAmnt==null)
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1072" && faceAmnt==null)
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1072保单保额不应为空 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1072保单保额不应为空 \n");
 end
 
 rule "dwdI17InsurancePolicyDayOfl_insEfftdate_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(insEfftDate==null)
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode != null && errorCode not contains "L1001"  && insEfftDate==null)
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"1001生效日期不能为空 " +"\n":dwdI17InsurancePolicyDayOfl.getRemark()+"1001生效日期不能为空 \n");
 end

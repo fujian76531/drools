@@ -69,6 +69,7 @@ public class DwdI17InsurancePolicyDayOfl {
     //缴费频率
     private String moneyinItrvl;
 
+    private String errorCode;
     private String remark;
 
 }
