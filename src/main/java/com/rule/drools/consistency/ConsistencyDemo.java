@@ -6,6 +6,9 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,9 +24,22 @@ public class ConsistencyDemo {
         DwdI17InsurancePolicyDayOfl demo = new DwdI17InsurancePolicyDayOfl();
         demo.setCntrStat("L");
         //demo.setFaceAmnt(-1d);
-        Date date = new Date(2021,0,01);
+
+        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = dateFormat1.parse("2009-06-01 00:00:00");
+
         Thread.sleep(1000);
         demo.setInsEndDate(new Date());
+
+        String format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        demo.setSignDate(format);
+        long time = date.getTime();
+        long l = System.currentTimeMillis();
+        Thread.sleep(3000);
+        System.out.println(l>time);
+        long l1 = System.currentTimeMillis();
+//        demo.setStdPremium(-1.0);
         //demo.setInsEfftDate(date);
         ks.insert(demo);
         int count = ks.fireAllRules();
@@ -31,7 +47,11 @@ public class ConsistencyDemo {
 //        System.out.println(i);
         System.out.println("总执行了"+count+":"+demo.getRemark());
         System.out.println(checkDate2((Object) new Date(),date,0));
+
         ks.dispose();
+        } catch (ParseException e) {
+
+        }
     }
 
     public static boolean checkDate2(Object beforeDate ,Object afterDate,int value){

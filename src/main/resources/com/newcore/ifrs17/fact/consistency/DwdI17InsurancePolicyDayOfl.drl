@@ -2,7 +2,8 @@ package com.newcore.ifrs17.fact.consistency;
 import  com.newcore.ifrs17.fact.consistency.DwdI17InsurancePolicyDayOfl;
 import java.util.Date;
 import java.util.Calendar;
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat
+import java.text.DateFormat;
 
 function boolean checkObjectDate(Object beforeDate ,Date afterDate,int value){
         Calendar calendar = Calendar.getInstance();
@@ -47,6 +48,13 @@ function String dateToString(Object date,String format){
     SimpleDateFormat formatter = new SimpleDateFormat(format);
     String dateInfo = formatter.format((Date)date);
     return dateInfo;
+}
+function boolean checkDateNow(String stringDate){
+    DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Date date = dateFormat1.parse(stringDate);
+    long time = date.getTime();
+    long l = System.currentTimeMillis();
+    return l>time;
 }
 rule "dwdI17InsurancePolicyDayOfl_cntrStatInsEndDate_check"
     when
@@ -110,7 +118,8 @@ rule "dwdI17InsurancePolicyDayOfl_aveFundBalance_check"
 end
 rule "dwdI17InsurancePolicyDayOfl_stdPremiumSignDate_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1047" &&((stdPremium==null || stdPremium<=0 ) && (signDate !=null && checkDateObject(new Date(),signDate,0))))
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1047" &&((stdPremium==null || stdPremium<=0 ) && (signDate !=null && checkDateNow(signDate))))
+
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1047新单基本保费应该大于0，且不能为空 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1047新单基本保费应该大于0，且不能为空 \n");
 end

@@ -52,7 +52,7 @@ public class DwdI17InsurancePolicyDayOfl {
     private Double aveFundBalance2;
 
     //合同签署日
-    private Date signDate;
+    private String signDate;
 
     //期末投连账户价值
     private Double endLValue;
