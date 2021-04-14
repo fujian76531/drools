@@ -34,11 +34,10 @@ public class ConsistencyDemo {
 
         String format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         demo.setSignDate(format);
-        long time = date.getTime();
-        long l = System.currentTimeMillis();
-        Thread.sleep(3000);
+        Date date111 = dateFormat1.parse(format);
+        long time = date111.getTime();
+        long l = System.currentTimeMillis() - 24*60*60*1000;
         System.out.println(l>time);
-        long l1 = System.currentTimeMillis();
 //        demo.setStdPremium(-1.0);
         //demo.setInsEfftDate(date);
         ks.insert(demo);

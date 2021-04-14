@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.Test;
+import org.junit.platform.commons.util.StringUtils;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,11 +17,13 @@ import java.io.IOException;
  * @description：
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = serviceApplicationTest.class)
 public class serviceApplicationTest {
 
     @Test
     public void contextLoads() {
-        OkHttpClient client = new OkHttpClient();
+        String s = "";
+
+        System.out.println(StringUtils.isNotBlank(s));
     }
 }
