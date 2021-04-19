@@ -7,7 +7,7 @@ import java.text.DateFormat;
 
 function String dateToString(Object date,String format){
     SimpleDateFormat formatter = new SimpleDateFormat(format);
-    String dateInfo = formatter.format((Date)date);
+    String dateInfo = formatter.format(date);
     return dateInfo;
 }
 function boolean checkDateNow(String stringDate){
@@ -15,7 +15,9 @@ function boolean checkDateNow(String stringDate){
     Date date = dateFormat1.parse(stringDate);
     long time = date.getTime();
     long l = System.currentTimeMillis() - 24*60*60*1000;
-    return l<time;
+    System.out.println("stringDate" + time);
+    System.out.println("stringDatel" + l);
+    return l>time;
 }
 /*rule "dwdI17InsurancePolicyDayOfl_cntrStatInsEndDate_check"
     when
@@ -29,11 +31,13 @@ rule "dwdI17InsurancePolicyDayOfl_insEndDateCntrStat_T_check"
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1013保单终止状态,终止日期错 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1013保单终止状态,终止日期错 \n");
 end*/
-rule "dwdI17InsurancePolicyDayOfl_insEndDateCntrStat_L_check"
+rule "dwdI17InsurancePolicyDayOfl_insEnddateCntrStat_L_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1021" &&cntrStat=="L"&&(insEndDate==null || dateToString(insEndDate,"yyyy-MM-dd")!="1900-01-01"))
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1021" &&cntrStat=="L"&&
+        (insEnddate == null || insEnddate not contains ("1900-01-01")))
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1021失效状态不应有终止日期 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1021失效状态不应有终止日期 \n");
+        System.out.println("=========================================" + dwdI17InsurancePolicyDayOfl.getInsEnddate() + "=====================================================");
 end
 /*rule "dwdI17InsurancePolicyDayOfl_insureSex_check"
     when
@@ -49,7 +53,7 @@ rule "dwdI17InsurancePolicyDayOfl_faceAmntZero_check"
 end
 rule "dwdI17InsurancePolicyDayOfl_DwdI17PrdInsurTypeDayOfl_check"
     when
-        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1030" &&( moneyinItrvl not in("Y","H","Q","W","M","3")||(isSupYearMoneyin=="N" &&isSupHalfYearMoneyin=="N" && isSupQuarterMoneyin=="N" && isSupMonthlyMoneyin=="N" && isSupSingleMoneyin=="N" && isSup3YearsMoneyin=="N")))
+        dwdI17InsurancePolicyDayOfl:DwdI17InsurancePolicyDayOfl(errorCode not contains "L1030" &&( moneyinItrvl not in("Y","H","Q","W","M","3")||(moneyinItrvl =="Y"&&isSupYearMoneyin=="N")||(moneyinItrvl =="H"&&isSupHalfYearMoneyin=="N")||(moneyinItrvl =="Q"&&isSupQuarterMoneyin=="N")||(moneyinItrvl =="W"&&isSupSingleMoneyin=="N")||(moneyinItrvl =="M"&&isSupMonthlyMoneyin=="N")||(moneyinItrvl =="3"&&isSup3YearsMoneyin=="N")))
     then
         dwdI17InsurancePolicyDayOfl.setRemark(dwdI17InsurancePolicyDayOfl.getRemark()==null?"L1030缴费频率不正确 \n":dwdI17InsurancePolicyDayOfl.getRemark()+"L1030缴费频率不正确 \n");
 end

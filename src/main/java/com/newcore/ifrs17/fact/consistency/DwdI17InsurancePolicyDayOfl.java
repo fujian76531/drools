@@ -14,7 +14,7 @@ public class DwdI17InsurancePolicyDayOfl {
     private String cntrStat;
 
     //保单终止日期
-    private Date insEndDate;
+    private String insEnddate;
 
     //保单生效日期
     private Date insEfftDate;

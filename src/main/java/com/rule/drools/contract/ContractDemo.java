@@ -35,7 +35,7 @@ public class ContractDemo {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        demo.setInsEndDate(date);
+//        demo.setInsEndDate(date);
         ks.insert(demo);
         int count = ks.fireAllRules();
 
